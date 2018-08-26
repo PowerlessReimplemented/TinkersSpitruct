@@ -10,6 +10,10 @@ public class TagHelper {
     private TagHelper() {
     }
     
+    public static boolean hasStackTag(ItemStack stack) {
+        return CraftItemStack.asNMSCopy(stack).hasTag();
+    }
+    
     /** Get an {@code ItemStack}'s NBT tag. Will create an empty tag if the stack doesn't have one. */
     public static NBTTagCompound getStackTag(ItemStack stack) {
         return getStackTag(CraftItemStack.asNMSCopy(stack));

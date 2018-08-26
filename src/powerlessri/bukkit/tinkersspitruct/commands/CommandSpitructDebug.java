@@ -22,7 +22,12 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 ItemStack hand = player.getInventory().getItemInMainHand();
-                NBTTagCompound tag = PluginTagHelper.getPluginTag(hand);
+                
+                if(PluginTagHelper.hasPluginTag(hand)) {
+                    NBTTagCompound tag = PluginTagHelper.getPluginTag(hand);
+                    
+//                    ToolDataHandler.updateToolData(tag);
+                }
             }
         });
     }

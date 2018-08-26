@@ -17,4 +17,12 @@ public class PluginTagHelper {
         return pluginTag;
     }
     
+    public static boolean hasPluginTag(ItemStack stack) {
+        if(!TagHelper.hasStackTag(stack)) {
+            return false;
+        }
+        
+        return TagHelper.getStackTag(stack).hasKey(Reference.PLUGIN_ID);
+    }
+    
 }

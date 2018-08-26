@@ -19,15 +19,14 @@ import powerlessri.bukkit.tinkersspitruct.library.helpers.file.FilePathHelper;
 
 public class LangMap {
 
-    /** default serial version UID */
-    private static final long serialVersionUID = 1L;
-    
     public static final Splitter equalSignSpliter = Splitter.on("=").limit(2);
 
     private final Map<String, String> map;
+    private final Map<String, ArrayList<String>> mapLists;
     
     public LangMap() {
         this.map = new HashMap<String, String>();
+        this.mapLists = new HashMap<String, ArrayList<String>>();
     }
     
     public void load(String fileName) {
@@ -57,9 +56,9 @@ public class LangMap {
                 }
             }
         } catch(FileNotFoundException e) {
-            Reference.plugin.getLogger().log(Level.WARNING, "The specified file path does not exist!", e);
-        } catch(IOException e) {
-            e.printStackTrace();
+            Reference.getPlugin().getLogger().log(Level.WARNING, "The specified file path does not exist!", e);
+        } catch(Throwable e) {
+            Reference.getPlugin().getLogger().log(Level.WARNING, "Unkown error occured during loading .lang file.", e);
         }
     }
     
@@ -68,11 +67,15 @@ public class LangMap {
     }
     
     public ArrayList<String> tranlationList(String key) {
+        if(this.mapLists.containsKey(key)) {
+            return this.mapLists.get(key);
+        }
+        
         int index = 1;
         ArrayList<String> result = new ArrayList<String>();
         
         while(true) {
-            String indexedKey = key + "." + index;
+            String indexedKey = key + "@" + index;
             if(!this.map.containsKey(indexedKey)) {
                 break;
             }
@@ -80,6 +83,7 @@ public class LangMap {
             result.add(this.map.get(indexedKey));
         }
         
+        this.mapLists.put(key, result);
         return result;
     }
     

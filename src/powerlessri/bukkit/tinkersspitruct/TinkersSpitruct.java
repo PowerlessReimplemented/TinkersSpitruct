@@ -5,26 +5,39 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.lang.LangMap;
+import powerlessri.bukkit.tinkersspitruct.library.pranks.MainPranker;
 
 public class TinkersSpitruct extends JavaPlugin { 
     
     @FinalField
     public ConfigurationSection config;
+    @FinalField
+    public MainPranker pranker;
     
     public LangMap lang;
     
     public void onEnable() {
-        this.config = getConfig();
-        this.lang = new LangMap();
+        Reference.setPlugin(this);
         
-        Reference.setPluginInstance(this);
-        this.lang.load("en_US");
+        this.config = getConfig();
+        this.pranker = new MainPranker(getLogger());
+        
+        this.reloadLang("en_US");
         
         getLogger().info("Plugin " + Reference.PLUGIN_ID + " loaded.");
-        getLogger().info(this.lang.translate("prank.startUp.tic&natura"));
     }
     
     public void onDisable() {
+    }
+    
+    
+    public void reloadLang(String file) {
+        this.lang = new LangMap();
+        this.loadExtra(file);
+    }
+    
+    public void loadExtra(String file) {
+        this.lang.load(file);
     }
     
 }

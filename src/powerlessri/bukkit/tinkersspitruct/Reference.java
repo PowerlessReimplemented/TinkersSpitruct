@@ -1,5 +1,10 @@
 package powerlessri.bukkit.tinkersspitruct;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import powerlessri.bukkit.tinkersspitruct.library.helpers.file.FilePathHelper;
 
 public class Reference {
@@ -7,13 +12,25 @@ public class Reference {
     private Reference() {
     }
 
-    public static TinkersSpitruct plugin;
-    public static void setPluginInstance(TinkersSpitruct plg) {
-        if(plg != null) {
-            plugin = plg;
-        } else {
-            plugin = new TinkersSpitruct();
+    public static List<TinkersSpitruct> plugins;
+    
+    public static void setPlugin(TinkersSpitruct plg) {
+        if(plugins == null) {
+            plugins = new ArrayList<TinkersSpitruct>();
         }
+        
+        if(plg != null) {
+            plugins.add(plg);
+        }
+    }
+    
+    @Nullable
+    public static TinkersSpitruct getPlugin() {
+        if(plugins == null) {
+            plugins = new ArrayList<TinkersSpitruct>();
+        }
+        
+        return plugins.size() == 0 ? null : plugins.get(0);
     }
 
     /** ID for internal usage */
