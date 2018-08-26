@@ -1,0 +1,8 @@
+name: TinkersSpitruct
+main: powerlessri.bukkit.tinkersspitruct.TinkersSpitruct
+version: 1.0
+api-version: 1.12
+commands:
+    spitruct:
+        description: TinkersSpitruct's general debug commands
+        usage: /spitruct <option> [mode]
