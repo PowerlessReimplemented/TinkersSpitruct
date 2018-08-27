@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import powerlessri.bukkit.tinkersspitruct.Reference;
 import powerlessri.bukkit.tinkersspitruct.library.helpers.tags.PluginTagHelper;
 
 public class CommandSpitructDebug extends CommandBranchedBase {
@@ -28,6 +29,12 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                     
 //                    ToolDataHandler.updateToolData(tag);
                 }
+            }
+        });
+        this.addOption("inventoryTest1", (sender, args) -> {
+            if(sender instanceof Player) {
+                Player player = (Player) sender;
+                player.openInventory(Reference.getPlugin().testInventory);
             }
         });
     }

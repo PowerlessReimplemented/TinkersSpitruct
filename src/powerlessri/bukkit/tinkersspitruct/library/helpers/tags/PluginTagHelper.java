@@ -25,4 +25,14 @@ public class PluginTagHelper {
         return TagHelper.getStackTag(stack).hasKey(Reference.PLUGIN_ID);
     }
     
+    
+    public static boolean isStackImmovable(ItemStack stack) {
+        NBTTagCompound tag = getPluginTag(stack);
+        if(tag.hasKey(CommonItemTags.IS_STACK_IMMOVABLE.getKey())) {
+            return tag.getBoolean(CommonItemTags.IS_STACK_IMMOVABLE.getKey());
+        }
+        
+        return false;
+    }
+    
 }
