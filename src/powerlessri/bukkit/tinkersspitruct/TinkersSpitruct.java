@@ -14,8 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
+import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
-import powerlessri.bukkit.tinkersspitruct.library.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.library.event.InventoryEvents;
 import powerlessri.bukkit.tinkersspitruct.library.event.calls.EventCalls;
 import powerlessri.bukkit.tinkersspitruct.library.helpers.tags.CommonItemTags;

@@ -1,4 +1,4 @@
-package powerlessri.bukkit.tinkersspitruct.library.eastereggs;
+package powerlessri.bukkit.tinkersspitruct.eastereggs;
 
 public class EasterEggsHandler {
     
