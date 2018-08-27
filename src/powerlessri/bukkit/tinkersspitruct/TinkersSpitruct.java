@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -53,9 +54,17 @@ public class TinkersSpitruct extends JavaPlugin {
         
         InventoryBuilder builder = InventoryBuilder.createBuilder(3, "test inventory");
         ItemStack stack = new ItemStack(Material.DIAMOND);
-        NBTTagCompound tag = PluginTagHelper.getPluginTag(stack);
+        net.minecraft.server.v1_12_R1.ItemStack nms = CraftItemStack.asNMSCopy(stack);
+        
+        NBTTagCompound tag = new NBTTagCompound();
         tag.setString(CommonItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
         tag.setInt(CommonItemTags.CLICK_EVENT_ID.getKey(), callId);
+        
+        NBTTagCompound rootTag = new NBTTagCompound();
+        rootTag.set(Reference.PLUGIN_ID, tag);
+        nms.setTag(rootTag);
+        
+        stack = CraftItemStack.asCraftMirror(nms);
         
         builder.addImmovableSlot(stack, 0);
         testInventory = builder.makeInventory();

@@ -27,6 +27,12 @@ public class TagHelper {
         return stack.getTag();
     }
     
+    public static ItemStack setStackTag(ItemStack stack, NBTTagCompound tag) {
+        net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(stack);
+        nmsStack.setTag(tag);
+        return CraftItemStack.asCraftMirror(nmsStack);
+    }
+    
     
     public static NBTTagCompound getTagSafe(ItemStack stack, String key) {
         return getTagSafe(CraftItemStack.asNMSCopy(stack), key);

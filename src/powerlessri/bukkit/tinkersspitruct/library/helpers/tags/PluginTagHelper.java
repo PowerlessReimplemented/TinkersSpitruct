@@ -17,6 +17,11 @@ public class PluginTagHelper {
         return pluginTag;
     }
     
+    public static ItemStack saveToStack(ItemStack stack, NBTTagCompound tag) {
+        return TagHelper.setStackTag(stack, tag);
+    }
+    
+    
     public static boolean hasPluginTag(ItemStack stack) {
         if(!TagHelper.hasStackTag(stack)) {
             return false;
