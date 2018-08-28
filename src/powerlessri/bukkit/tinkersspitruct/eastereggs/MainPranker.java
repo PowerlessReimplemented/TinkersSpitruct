@@ -1,28 +1,24 @@
 package powerlessri.bukkit.tinkersspitruct.eastereggs;
 
-import java.util.logging.Logger;
-
-import powerlessri.bukkit.tinkersspitruct.Reference;
-import powerlessri.bukkit.tinkersspitruct.library.lang.LangMap;
+import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 
 public class MainPranker {
     
-    private final Logger pluginLogger;
+    private final TinkersSpitruct plugin;
     
-    public MainPranker() {
-        this.pluginLogger = Reference.getPlugin().getLogger();
+    
+    public MainPranker(TinkersSpitruct plugin) {
+        this.plugin = plugin;
     }
 
     public void consolePrank(String prank) {
-        this.pluginLogger.info(prank);
+        plugin.getLogger().info(prank);
     }
     
     
     
     public void doConsolePranks() {
-        LangMap lang = Reference.getPlugin().lang;
-        
-        this.consolePrank(lang.translate("prank.startUp.tic&natura"));
+        this.consolePrank(plugin.lang.translate("prank.startUp.tic&natura"));
     }
     
 }

@@ -6,26 +6,33 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
+import powerlessri.bukkit.tinkersspitruct.events.InventoryEventHandler;
+import powerlessri.bukkit.tinkersspitruct.events.calls.EventCalls;
+import powerlessri.bukkit.tinkersspitruct.library.Reference;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
-import powerlessri.bukkit.tinkersspitruct.library.event.InventoryEvents;
-import powerlessri.bukkit.tinkersspitruct.library.event.calls.EventCalls;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.lang.LangMap;
-import powerlessri.bukkit.tinkersspitruct.library.tags.CommonItemTags;
-import powerlessri.bukkit.tinkersspitruct.library.tags.PluginTagHelper;
 import powerlessri.bukkit.tinkersspitruct.library.tags.TaggedItemBuilder;
+import powerlessri.bukkit.tinkersspitruct.tags.CommonItemTags;
+import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class TinkersSpitruct extends JavaPlugin { 
+    
+    public static TinkersSpitruct plugin;
+    
+    /** ID for internal usage */
+    public static final String PLUGIN_ID = "tinkersspitruct";
+    /** A human-readable name for the plugin */
+    public static final String PLUGIN_NAME = "Tinker's Spitruct";
     
     @FinalField
     public ConfigurationSection config;
@@ -38,17 +45,20 @@ public class TinkersSpitruct extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        Reference.clearPlugins();
-        Reference.addPlugin(this);
+        plugin = this;
+        
+        PluginReference.clearPlugins();
+        PluginReference.addPlugin(this);
         
         this.config = getConfig();
-        this.pranker = new MainPranker();
+        this.pranker = new MainPranker(this);
         this.eventCalls = new HashMap<String, EventCalls>();
         
         this.reloadLang("en_US");
         
         this.getCommand("spitruct").setExecutor(new CommandSpitructDebug());
         
+        Bukkit.getPluginManager().registerEvents(new InventoryEventHandler(), this);
         
         Runnable testCall = () -> {
             getLogger().info("item got clicked!");
@@ -56,35 +66,24 @@ public class TinkersSpitruct extends JavaPlugin {
         int callId = addEventCall("test", testCall);
         
         InventoryBuilder builder = InventoryBuilder.createBuilder(3, "test inventory");
-        ItemStack stack = new ItemStack(Material.DIAMOND);
-        net.minecraft.server.v1_12_R1.ItemStack nms = CraftItemStack.asNMSCopy(stack);
         
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setString(CommonItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
-        tag.setInt(CommonItemTags.CLICK_EVENT_ID.getKey(), callId);
+        TaggedItemBuilder taggedItems = TaggedItemBuilder.builderOf(null);
         
-        NBTTagCompound rootTag = new NBTTagCompound();
-        rootTag.set(Reference.PLUGIN_ID, tag);
-        nms.setTag(rootTag);
+        taggedItems.addTagCompound(PLUGIN_ID);
+        taggedItems.cd(PLUGIN_ID);
         
-        stack = CraftItemStack.asCraftMirror(nms);
+        taggedItems.addDefaultString(CommonItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
+        taggedItems.addDefaultInt(CommonItemTags.CLICK_EVENT_ID.getKey(), callId);
         
-//        TaggedItemBuilder taggedItems = TaggedItemBuilder.builderOf(null);
-//        
-//        taggedItems.addTagCompound(Reference.PLUGIN_ID);
-//        taggedItems.cd(Reference.PLUGIN_ID);
-//        
-//        taggedItems.addDefaultString(CommonItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
-//        taggedItems.addDefaultInt(CommonItemTags.CLICK_EVENT_ID.getKey(), callId);
+        builder.addImmovableSlot(0, taggedItems.buildItem(Material.DIAMOND));
+        builder.addImmovableSlot(1, taggedItems.buildItem(Material.EMERALD));
         
-//        builder.addImmovableSlot(taggedItems.buildItem(Material.DIAMOND), 0);
-//        builder.addImmovableSlot(0, new ItemStack(Material.DIAMOND));
-        
-        builder.addImmovableSlot(0, stack);
+//        builder.addImmovableSlot(0, stack);
         testInventory = builder.makeInventory();
+        testInventory2 = builder.makeInventory();
         
         
-        getLogger().info("Plugin " + Reference.PLUGIN_ID + " loaded.");
+        getLogger().info(PLUGIN_ID + " loaded.");
         
         this.pranker.doConsolePranks();
     }
@@ -93,19 +92,6 @@ public class TinkersSpitruct extends JavaPlugin {
     public void onDisable() {
     }
     
-    
-    @EventHandler
-    public void onInventoryClickEvent(InventoryClickEvent event) {
-        if(PluginTagHelper.hasPluginTag(event.getCurrentItem())) {
-            NBTTagCompound tag = PluginTagHelper.getPluginTag(event.getCurrentItem());
-            
-            InventoryEvents.processStackClickEvent(tag);
-            
-            if(InventoryEvents.shouldCancelImmovable(tag)) {
-                event.setCancelled(true);
-            }
-        }
-    }
     
     
     public int addEventCall(String category, Runnable call) {
@@ -125,7 +111,7 @@ public class TinkersSpitruct extends JavaPlugin {
     }
     
     public void reloadLang(String file) {
-        this.lang = new LangMap();
+        this.lang = new LangMap(getLogger(), PLUGIN_ID);
         this.loadLang(file);
     }
     
@@ -137,5 +123,6 @@ public class TinkersSpitruct extends JavaPlugin {
     // Test //
     
     public Inventory testInventory;
+    public Inventory testInventory2;
     
 }

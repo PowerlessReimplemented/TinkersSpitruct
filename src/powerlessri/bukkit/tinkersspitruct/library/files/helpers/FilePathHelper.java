@@ -1,4 +1,4 @@
-package powerlessri.bukkit.tinkersspitruct.library.helpers.file;
+package powerlessri.bukkit.tinkersspitruct.library.files.helpers;
 
 public class FilePathHelper {
     

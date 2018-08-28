@@ -8,22 +8,33 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 
 import com.google.common.base.Splitter;
 
-import powerlessri.bukkit.tinkersspitruct.Reference;
-import powerlessri.bukkit.tinkersspitruct.library.helpers.file.FilePathHelper;
+import powerlessri.bukkit.tinkersspitruct.library.Reference;
+import powerlessri.bukkit.tinkersspitruct.library.files.helpers.FilePathHelper;
 
 public class LangMap {
 
     public static final Splitter equalSignSpliter = Splitter.on("=").limit(2);
 
+    private final String pluginId;
+    private final String configPath;
+    private final Logger logger;
     private final Map<String, String> map;
     private final Map<String, ArrayList<String>> mapLists;
     
-    public LangMap() {
+    public LangMap(Logger logger, String pluginId) {
+        this.pluginId = pluginId;
+        this.configPath = 
+                Reference.SERVER_FOLDER + 
+                Reference.PLUGIN_FOLDER +
+                Reference.PLUGIN_CONFIG_FOLDER +
+                FilePathHelper.pathDir(pluginId);
+        this.logger = logger;
         this.map = new HashMap<String, String>();
         this.mapLists = new HashMap<String, ArrayList<String>>();
     }
@@ -32,12 +43,7 @@ public class LangMap {
         FileInputStream langReader;
         
         try {
-            langReader = new FileInputStream(
-                    Reference.SERVER_FOLDER +
-                    Reference.PLUGIN_FOLDER +
-                    Reference.PLUGIN_CONFIG_FOLDER +
-                    FilePathHelper.pathDir(Reference.PLUGIN_ID) +
-                    fileName + ".lang");
+            langReader = new FileInputStream(this.configPath + fileName + ".lang");
             
             for(String line : IOUtils.readLines(langReader, StandardCharsets.UTF_8)) {
                 
@@ -55,9 +61,9 @@ public class LangMap {
                 }
             }
         } catch(FileNotFoundException e) {
-            Reference.getPlugin().getLogger().log(Level.WARNING, "The specified file path does not exist!", e);
+            this.logger.log(Level.WARNING, "The specified file path does not exist!", e);
         } catch(Throwable e) {
-            Reference.getPlugin().getLogger().log(Level.WARNING, "Unkown error occured during loading .lang file.", e);
+            this.logger.log(Level.WARNING, "Unkown error occured during loading .lang file.", e);
         }
     }
     

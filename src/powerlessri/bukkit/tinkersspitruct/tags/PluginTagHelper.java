@@ -1,11 +1,12 @@
-package powerlessri.bukkit.tinkersspitruct.library.tags;
+package powerlessri.bukkit.tinkersspitruct.tags;
 
 import javax.annotation.Nullable;
 
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.Reference;
+import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
+import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 public class PluginTagHelper {
     
@@ -15,7 +16,7 @@ public class PluginTagHelper {
     @Nullable
     public static NBTTagCompound getPluginTag(ItemStack stack) {
         NBTTagCompound tag = TagHelper.getStackTag(stack);
-        NBTTagCompound pluginTag = tag.getCompound(Reference.PLUGIN_ID);
+        NBTTagCompound pluginTag = tag.getCompound(TinkersSpitruct.PLUGIN_ID);
         
         return pluginTag;
     }
@@ -26,7 +27,7 @@ public class PluginTagHelper {
             return false;
         }
         
-        return TagHelper.getStackTag(stack).hasKey(Reference.PLUGIN_ID);
+        return TagHelper.getStackTag(stack).hasKey(TinkersSpitruct.PLUGIN_ID);
     }
     
     

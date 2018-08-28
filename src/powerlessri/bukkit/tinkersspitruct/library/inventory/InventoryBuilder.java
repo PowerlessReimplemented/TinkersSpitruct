@@ -5,8 +5,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.library.tags.CommonItemTags;
-import powerlessri.bukkit.tinkersspitruct.library.tags.PluginTagHelper;
+import powerlessri.bukkit.tinkersspitruct.tags.CommonItemTags;
+import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class InventoryBuilder {
     
@@ -46,7 +46,11 @@ public class InventoryBuilder {
         Inventory result = Bukkit.createInventory(null, this.amountSlots, inventoryTitle);
         
         for(int i = 0; i < this.amountSlots; i++) {
-            result.setItem(i, inventoryMap[i].clone());
+            if(inventoryMap[i] != null) {
+                // When adding an ItemStack to an inventory, the inventory will
+                // automatically make a copy of the ItemStack.
+                result.setItem(i, inventoryMap[i]);
+            }
         }
         
         return result;

@@ -5,12 +5,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MainHand;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.Reference;
-import powerlessri.bukkit.tinkersspitruct.library.tags.PluginTagHelper;
-import powerlessri.bukkit.tinkersspitruct.library.tags.TagHelper;
+import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
+import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
+import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class CommandSpitructDebug extends CommandBranchedBase {
     
@@ -47,7 +46,22 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 player.sendMessage("trying to open inventory...");
-                Inventory inventory = Reference.getPlugin().testInventory;
+                Inventory inventory = TinkersSpitruct.plugin.testInventory;
+                
+                if(inventory == null) {
+                    player.sendMessage("failed to open inventory");
+                    return;
+                }
+                
+                player.openInventory(inventory);
+            }
+        });
+        
+        this.addOption("inventoryTest2", (sender, args) -> {
+            if(sender instanceof Player) {
+                Player player = (Player) sender;
+                player.sendMessage("trying to open inventory...");
+                Inventory inventory = TinkersSpitruct.plugin.testInventory2;
                 
                 if(inventory == null) {
                     player.sendMessage("failed to open inventory");

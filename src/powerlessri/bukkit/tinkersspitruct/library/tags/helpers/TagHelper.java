@@ -1,4 +1,4 @@
-package powerlessri.bukkit.tinkersspitruct.library.tags;
+package powerlessri.bukkit.tinkersspitruct.library.tags.helpers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
