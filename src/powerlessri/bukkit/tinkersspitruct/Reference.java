@@ -14,7 +14,11 @@ public class Reference {
 
     public static List<TinkersSpitruct> plugins;
     
-    public static void setPlugin(TinkersSpitruct plg) {
+    public static void clearPlugins() {
+        plugins = new ArrayList<TinkersSpitruct>();
+    }
+    
+    public static void addPlugin(TinkersSpitruct plg) {
         if(plugins == null) {
             plugins = new ArrayList<TinkersSpitruct>();
         }
@@ -38,6 +42,8 @@ public class Reference {
     /** A human-readable name for the plugin */
     public static final String PLUGIN_NAME = "Tinker's Spitruct";
     
+    public static final Object PREVIOUS_DIR = "..";
+    public static final Object CURRNET_DIR = ".";
     public static final String SERVER_FOLDER = System.getProperty("user.dir") + FilePathHelper.dirSeparator();
     public static final String PLUGIN_FOLDER = FilePathHelper.pathDir("plugins");
     

@@ -1,4 +1,4 @@
-package powerlessri.bukkit.tinkersspitruct.library.helpers.tags;
+package powerlessri.bukkit.tinkersspitruct.library.tags;
 
 public enum CommonItemTags {
     
