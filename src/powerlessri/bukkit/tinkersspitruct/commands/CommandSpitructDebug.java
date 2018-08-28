@@ -75,7 +75,7 @@ public class CommandSpitructDebug extends CommandBranchedBase {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if(!label.equals("spitruct") || args.length == 0) {
+        if(args.length == 0) {
             return false;
         }
         

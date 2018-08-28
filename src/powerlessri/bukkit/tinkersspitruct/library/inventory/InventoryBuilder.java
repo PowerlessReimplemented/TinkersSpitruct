@@ -4,8 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.tags.CommonItemTags;
+import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class InventoryBuilder {
@@ -35,8 +34,7 @@ public class InventoryBuilder {
     
     public void addImmovableSlot(int slot, ItemStack stack) {
         if(!PluginTagHelper.isStackImmovable(stack)) {
-            NBTTagCompound tag = PluginTagHelper.getPluginTag(stack);
-            tag.setBoolean(CommonItemTags.IS_STACK_IMMOVABLE.getKey(), true);
+            ItemTags.IS_STACK_IMMOVABLE.fixStack(stack);
         }
         
         inventoryMap[slot] = stack;

@@ -34,6 +34,14 @@ public class TagHelper {
         return stack.getTag();
     }
     
+    /** Returns the stack with the given tag. <b>Does not change the given stack by itself.</b> */
+    public static ItemStack getStackWithTag(ItemStack stack, NBTTagCompound tag) {
+        net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(stack);
+        nmsStack.setTag(tag);
+        return CraftItemStack.asCraftMirror(nmsStack);
+    }
+    
+    /** If the given stack does not have a tag, create one for it & return */
     public static ItemStack getTaggedStack(ItemStack stack) {
         net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(stack);
         
@@ -45,15 +53,10 @@ public class TagHelper {
         }
     }
     
-//    /** Returns the stack with the given tag. <b>Does not change the given stack by itself.</b> */
-//    public static ItemStack getStackWithTag(ItemStack stack, NBTTagCompound tag) {
-//        net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(stack);
-//        nmsStack.setTag(tag);
-//        return CraftItemStack.asCraftMirror(nmsStack);
-//    }
-//    
-//    
-//    
+   
+    
+    
+    
 //    @Deprecated
 //    public static NBTTagCompound getTagSafe(ItemStack stack, String key) {
 //        return getTagSafe(CraftItemStack.asNMSCopy(stack), key);

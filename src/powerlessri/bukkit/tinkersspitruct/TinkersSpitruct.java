@@ -5,25 +5,18 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryEventHandler;
 import powerlessri.bukkit.tinkersspitruct.events.calls.EventCalls;
-import powerlessri.bukkit.tinkersspitruct.library.Reference;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.lang.LangMap;
 import powerlessri.bukkit.tinkersspitruct.library.tags.TaggedItemBuilder;
-import powerlessri.bukkit.tinkersspitruct.tags.CommonItemTags;
-import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
+import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.CommonTags.ItemTags;
 
 public class TinkersSpitruct extends JavaPlugin { 
     
@@ -34,8 +27,7 @@ public class TinkersSpitruct extends JavaPlugin {
     /** A human-readable name for the plugin */
     public static final String PLUGIN_NAME = "Tinker's Spitruct";
     
-    @FinalField
-    public ConfigurationSection config;
+    
     @FinalField
     public MainPranker pranker;
     @FinalField
@@ -50,7 +42,6 @@ public class TinkersSpitruct extends JavaPlugin {
         PluginReference.clearPlugins();
         PluginReference.addPlugin(this);
         
-        this.config = getConfig();
         this.pranker = new MainPranker(this);
         this.eventCalls = new HashMap<String, EventCalls>();
         
@@ -72,8 +63,8 @@ public class TinkersSpitruct extends JavaPlugin {
         taggedItems.addTagCompound(PLUGIN_ID);
         taggedItems.cd(PLUGIN_ID);
         
-        taggedItems.addDefaultString(CommonItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
-        taggedItems.addDefaultInt(CommonItemTags.CLICK_EVENT_ID.getKey(), callId);
+        taggedItems.addDefaultString(ItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
+        taggedItems.addDefaultInt(ItemTags.CLICK_EVENT_ID.getKey(), callId);
         
         builder.addImmovableSlot(0, taggedItems.buildItem(Material.DIAMOND));
         builder.addImmovableSlot(1, taggedItems.buildItem(Material.EMERALD));
