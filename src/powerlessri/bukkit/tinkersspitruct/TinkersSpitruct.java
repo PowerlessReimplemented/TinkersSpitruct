@@ -3,6 +3,7 @@ package powerlessri.bukkit.tinkersspitruct;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
@@ -18,10 +19,11 @@ import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.event.InventoryEvents;
 import powerlessri.bukkit.tinkersspitruct.library.event.calls.EventCalls;
-import powerlessri.bukkit.tinkersspitruct.library.helpers.tags.CommonItemTags;
-import powerlessri.bukkit.tinkersspitruct.library.helpers.tags.PluginTagHelper;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.lang.LangMap;
+import powerlessri.bukkit.tinkersspitruct.library.tags.CommonItemTags;
+import powerlessri.bukkit.tinkersspitruct.library.tags.PluginTagHelper;
+import powerlessri.bukkit.tinkersspitruct.library.tags.TaggedItemBuilder;
 
 public class TinkersSpitruct extends JavaPlugin { 
     
@@ -36,7 +38,8 @@ public class TinkersSpitruct extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        Reference.setPlugin(this);
+        Reference.clearPlugins();
+        Reference.addPlugin(this);
         
         this.config = getConfig();
         this.pranker = new MainPranker();
@@ -66,7 +69,18 @@ public class TinkersSpitruct extends JavaPlugin {
         
         stack = CraftItemStack.asCraftMirror(nms);
         
-        builder.addImmovableSlot(stack, 0);
+//        TaggedItemBuilder taggedItems = TaggedItemBuilder.builderOf(null);
+//        
+//        taggedItems.addTagCompound(Reference.PLUGIN_ID);
+//        taggedItems.cd(Reference.PLUGIN_ID);
+//        
+//        taggedItems.addDefaultString(CommonItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
+//        taggedItems.addDefaultInt(CommonItemTags.CLICK_EVENT_ID.getKey(), callId);
+        
+//        builder.addImmovableSlot(taggedItems.buildItem(Material.DIAMOND), 0);
+//        builder.addImmovableSlot(0, new ItemStack(Material.DIAMOND));
+        
+        builder.addImmovableSlot(0, stack);
         testInventory = builder.makeInventory();
         
         

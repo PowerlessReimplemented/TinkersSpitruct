@@ -1,4 +1,6 @@
-package powerlessri.bukkit.tinkersspitruct.library.helpers.tags;
+package powerlessri.bukkit.tinkersspitruct.library.tags;
+
+import javax.annotation.Nullable;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -10,20 +12,17 @@ public class PluginTagHelper {
     private PluginTagHelper() {
     }
     
+    @Nullable
     public static NBTTagCompound getPluginTag(ItemStack stack) {
         NBTTagCompound tag = TagHelper.getStackTag(stack);
-        NBTTagCompound pluginTag = TagHelper.getTagSafe(tag, Reference.PLUGIN_ID);
+        NBTTagCompound pluginTag = tag.getCompound(Reference.PLUGIN_ID);
         
         return pluginTag;
     }
     
-    public static ItemStack saveToStack(ItemStack stack, NBTTagCompound tag) {
-        return TagHelper.setStackTag(stack, tag);
-    }
-    
     
     public static boolean hasPluginTag(ItemStack stack) {
-        if(!TagHelper.hasStackTag(stack)) {
+        if(!TagHelper.hasTag(stack)) {
             return false;
         }
         

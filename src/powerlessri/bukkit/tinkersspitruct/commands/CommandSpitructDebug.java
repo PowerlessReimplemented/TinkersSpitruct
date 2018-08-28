@@ -3,13 +3,14 @@ package powerlessri.bukkit.tinkersspitruct.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MainHand;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.Reference;
-import powerlessri.bukkit.tinkersspitruct.library.helpers.tags.PluginTagHelper;
-import powerlessri.bukkit.tinkersspitruct.library.helpers.tags.TagHelper;
+import powerlessri.bukkit.tinkersspitruct.library.tags.PluginTagHelper;
+import powerlessri.bukkit.tinkersspitruct.library.tags.TagHelper;
 
 public class CommandSpitructDebug extends CommandBranchedBase {
     
@@ -38,21 +39,29 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 ItemStack hand = player.getInventory().getItemInMainHand();
-                player.sendMessage(TagHelper.getStackTag(hand).toString());
+                NBTTagCompound tag = TagHelper.getStackTag(hand);
+                player.sendMessage(tag == null ? "[no nbt tag]" : tag.toString());
             }
         });
         this.addOption("inventoryTest1", (sender, args) -> {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
-                player.sendMessage("trying to open invenotry...");
-                player.openInventory(Reference.getPlugin().testInventory);
+                player.sendMessage("trying to open inventory...");
+                Inventory inventory = Reference.getPlugin().testInventory;
+                
+                if(inventory == null) {
+                    player.sendMessage("failed to open inventory");
+                    return;
+                }
+                
+                player.openInventory(inventory);
             }
         });
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if(!label.equals("spitruct")) {
+        if(!label.equals("spitruct") || args.length == 0) {
             return false;
         }
         
