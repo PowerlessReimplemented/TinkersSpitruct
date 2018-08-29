@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
-import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.CommonTags.ItemTags;
+import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 public class PluginTagHelper {
@@ -31,7 +31,24 @@ public class PluginTagHelper {
         return TagHelper.getStackTag(stack).hasKey(TinkersSpitruct.PLUGIN_ID);
     }
     
+    public static ItemStack addPluginTag(ItemStack stack) {
+        if(!TagHelper.hasTag(stack)) {
+            stack = TagHelper.getTaggedStack(stack);
+        }
+        
+        NBTTagCompound tag = TagHelper.getStackTag(stack);
+        tag.set(TinkersSpitruct.PLUGIN_ID, new NBTTagCompound());
+        stack = saveToStack(stack, tag);
+        
+        return stack;
+    }
     
+    public static ItemStack saveToStack(ItemStack stack, NBTTagCompound tag) {
+        return TagHelper.getStackWithTag(stack, tag);
+    }
+    
+    
+
     public static boolean isStackImmovable(ItemStack stack) {
         NBTTagCompound tag = getPluginTag(stack);
         if(tag.hasKey(ItemTags.IS_STACK_IMMOVABLE.getKey())) {

@@ -6,6 +6,8 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
@@ -15,8 +17,9 @@ import powerlessri.bukkit.tinkersspitruct.events.calls.EventCalls;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.lang.LangMap;
+import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags;
+import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.library.tags.TaggedItemBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.CommonTags.ItemTags;
 
 public class TinkersSpitruct extends JavaPlugin { 
     
@@ -45,6 +48,8 @@ public class TinkersSpitruct extends JavaPlugin {
         this.pranker = new MainPranker(this);
         this.eventCalls = new HashMap<String, EventCalls>();
         
+        CommonTags.resetItemTagFixers(PLUGIN_ID);
+        
         this.reloadLang("en_US");
         
         this.getCommand("spitruct").setExecutor(new CommandSpitructDebug());
@@ -66,10 +71,26 @@ public class TinkersSpitruct extends JavaPlugin {
         taggedItems.addDefaultString(ItemTags.CLICK_EVENT_CATEGORY.getKey(), "test");
         taggedItems.addDefaultInt(ItemTags.CLICK_EVENT_ID.getKey(), callId);
         
-        builder.addImmovableSlot(0, taggedItems.buildItem(Material.DIAMOND));
-        builder.addImmovableSlot(1, taggedItems.buildItem(Material.EMERALD));
+        ItemStack stackHello = taggedItems.buildItem(Material.DIAMOND);
+        ItemMeta metaHello = stackHello.getItemMeta();
+        metaHello.setDisplayName("Hello, world!");
+        stackHello.setItemMeta(metaHello);
         
-//        builder.addImmovableSlot(0, stack);
+        ItemStack stackTicspi = taggedItems.buildItem(Material.IRON_PICKAXE);
+        ItemMeta metaTicspi = stackTicspi.getItemMeta();
+        metaTicspi.setDisplayName(PLUGIN_NAME);
+        stackTicspi.setItemMeta(metaTicspi);
+        
+        ItemStack stackGiveDiamonds = taggedItems.buildItem(Material.EMERALD);
+        
+        builder.addImmovableSlot(12, stackHello);
+        builder.addImmovableSlot(13, stackTicspi);
+        builder.addImmovableSlot(14, stackGiveDiamonds);
+        builder.addBlankSlot(0);
+        builder.addBlankSlot(9);
+        builder.addBlankSlot(18);
+        builder.blockEmptySlots();
+        
         testInventory = builder.makeInventory();
         testInventory2 = builder.makeInventory();
         

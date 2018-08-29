@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 public class TaggedItemChanger {
@@ -24,7 +25,7 @@ public class TaggedItemChanger {
         public void modifyTag(NBTTagCompound tag) {
             NBTTagCompound workingPointer = tag;
             
-            for(int i = 0; i < path.length - 1; i++) {
+            for(int i = 0; i < path.length; i++) {
                 workingPointer = workingPointer.getCompound(path[i]);
             }
             
@@ -34,7 +35,7 @@ public class TaggedItemChanger {
     }
     
     public static TaggedItemChanger fixerOf(ItemStack parentStack) {
-        return null;
+        return new TaggedItemChanger();
     }
     
     
@@ -45,7 +46,7 @@ public class TaggedItemChanger {
     }
     
     public void addRule(Consumer<NBTTagCompound> modifyFunction, String... path) {
-        addRule(new TagChangingRule(modifyFunction, path));
+        this.addRule(new TagChangingRule(modifyFunction, path));
     }
     
     public void addRule(TagChangingRule rule) {
@@ -55,6 +56,10 @@ public class TaggedItemChanger {
     
     public ItemStack fixItem(ItemStack stack) {
         NBTTagCompound tag = TagHelper.getStackTag(stack);
+        
+        if(tag == null) {
+            return stack;
+        }
         
         this.rules.forEach((rule) -> {
             rule.modifyTag(tag);
