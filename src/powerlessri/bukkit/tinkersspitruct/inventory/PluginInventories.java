@@ -3,12 +3,10 @@ package powerlessri.bukkit.tinkersspitruct.inventory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.inventory.Inventory;
-
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.CompoundInventories;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
 
+/** Store inventories by position in the world */
 public class PluginInventories {
     
     private final IMachineInventoryBuilder builder;
