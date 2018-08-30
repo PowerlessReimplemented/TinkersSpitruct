@@ -5,7 +5,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
@@ -19,7 +18,7 @@ public class InventoryEventHandler implements Listener {
         if(PluginTagHelper.hasPluginTag(event.getCurrentItem())) {
             NBTTagCompound tag = PluginTagHelper.getPluginTag(event.getCurrentItem());
             
-            this.processStackClickEvent(tag);
+//            this.processStackClickEvent(tag);
             
             event.setCancelled(shouldCancelImmovable(tag));
         }
@@ -27,9 +26,9 @@ public class InventoryEventHandler implements Listener {
     
     
 
-    private void processStackClickEvent(NBTTagCompound tag) {
-        if(tag.hasKey(InventoryToolBuilder.))
-    }
+//    private void processStackClickEvent(NBTTagCompound tag) {
+//        if(tag.hasKey(InventoryToolBuilder.))
+//    }
     
     private boolean shouldCancelImmovable(NBTTagCompound tag) {
         if(tag.hasKey(ItemTags.IS_STACK_IMMOVABLE.getKey())) {

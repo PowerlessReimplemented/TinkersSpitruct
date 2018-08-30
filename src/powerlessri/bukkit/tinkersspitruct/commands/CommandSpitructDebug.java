@@ -48,7 +48,7 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 player.sendMessage("trying to open inventory...");
-                InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getInventory(new BlockPosition(0, 0, 0));
+                InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId().getMostSignificantBits() );
                 compound.setCurrentInventory("builder");
                 Inventory inventory = compound.getInventory();
                 

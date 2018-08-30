@@ -1,5 +1,8 @@
 package powerlessri.bukkit.tinkersspitruct.inventory.machines;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -17,9 +20,9 @@ import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 // Somehow make everything static does not work
 public class InventoryToolBuilder implements IMachineInventoryBuilder {
-    
+
     public static final String IS_TOOL_BUILDER = "isToolBuilder";
-    
+
     private final String TOOL_BUILDER_CLICK_EVENT;
     private final byte BUILDER_PAGE;
     private final byte TOOL_CHOICE_PAGE;
@@ -28,15 +31,17 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
     private final InventoryBuilder builder;
     private final InventoryBuilder toolChoice;
-    
+
     private final InventorySequenceBuilder sequence;
 
+    private final Map<Long, InventorySequence> playerMap;
+
     public InventoryToolBuilder(String... listAviliableTools) {
-        
+
         this.TOOL_BUILDER_CLICK_EVENT = "toolBuilderClickEvent";
         this.BUILDER_PAGE = (byte) 0;
         this.TOOL_CHOICE_PAGE = (byte) 1;
-        
+
         this.INVENTORY_TITLE = TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.title");
 
         NBTTagCompound rootTag = new NBTTagCompound();
@@ -80,6 +85,10 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         this.toolChoice.blockEmptySlots();
 
         this.sequence = new InventorySequenceBuilder("tile.toolBuilder", this.builder, this.toolChoice);
+
+        // ================================ //
+
+        this.playerMap = new HashMap<Long, InventorySequence>();
     }
 
     @Override
@@ -87,10 +96,38 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         return sequence.makeInventory();
     }
 
+    // ======== Handles start ======== //
+
     @Override
     public void handleStackClicked(InventoryClickEvent event) {
         Inventory inventory = event.getInventory();
-        
+
     }
+
+    @Override
+    public void handleInventorySwitching(InventorySequence inventories) {
+
+    }
+
+    // ======== Handles end ======== //
+
+    @Override
+    public Map<Long, InventorySequence> getPlayerMap() {
+        return this.playerMap;
+    }
+
+    @Override
+    public InventorySequence getPlayerOwnedInv(Long uuid) {
+        InventorySequence result = this.playerMap.get(uuid);
+        
+        if(result == null) {
+            result = this.makeInventory();
+            this.playerMap.put(uuid, result);
+        }
+        
+        return result;
+    }
+    
+    
 
 }

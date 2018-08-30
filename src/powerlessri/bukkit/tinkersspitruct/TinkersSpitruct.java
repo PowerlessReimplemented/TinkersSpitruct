@@ -38,7 +38,7 @@ public class TinkersSpitruct extends JavaPlugin {
     @Deprecated
     public Map<String, EventCalls> eventCalls;
     
-    public PluginInventories toolBuilders;
+    public InventoryToolBuilder toolBuilders;
     public PluginInventories partBuilders;
     public PluginInventories stencilTables;
     
@@ -69,7 +69,7 @@ public class TinkersSpitruct extends JavaPlugin {
         
         registerEvent(new InventoryEventHandler());
         
-        this.toolBuilders = new PluginInventories(new InventoryToolBuilder());
+        this.toolBuilders = new InventoryToolBuilder();
         
         
         getLogger().info(PLUGIN_ID + " loaded.");
