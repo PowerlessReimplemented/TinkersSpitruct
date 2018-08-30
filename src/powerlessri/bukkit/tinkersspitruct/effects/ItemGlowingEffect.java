@@ -26,7 +26,7 @@ public class ItemGlowingEffect extends Enchantment {
         }
         
         try {
-            glow = new ItemGlowingEffect(70);
+            glow = new ItemGlowingEffect(100);
             Enchantment.registerEnchantment(glow);
         } catch (IllegalArgumentException e){
         } catch(Exception e){
