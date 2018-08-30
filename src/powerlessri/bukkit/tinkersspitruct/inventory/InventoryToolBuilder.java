@@ -1,7 +1,6 @@
 package powerlessri.bukkit.tinkersspitruct.inventory;
 
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -45,6 +44,7 @@ public class InventoryToolBuilder {
     public InventoryToolBuilder(String... listAviliableTools) {
         this.INVENTORY_TITLE = TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.title");
         
+        
         ItemStack buttonBuilder = itemBuilderButton.buildItem(Material.FURNACE);
         ItemStack buttonToolChoice = itemToolChoiceButton.buildItem(Material.DIAMOND_PICKAXE);
         
@@ -53,8 +53,8 @@ public class InventoryToolBuilder {
         
         metaBuilder.setDisplayName( TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.gotoBuilder") );
         metaToolChoice.setDisplayName( TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.gotoToolChoice") );
-        metaBuilder.addEnchant(Enchantment.BINDING_CURSE, 1, true);
-        metaToolChoice.addEnchant(Enchantment.BINDING_CURSE, 1, true);
+        metaBuilder.addEnchant(TinkersSpitruct.plugin.glow, 1, true);
+        metaToolChoice.addEnchant(TinkersSpitruct.plugin.glow, 1, true);
         
         buttonBuilder.setItemMeta(metaBuilder);
         buttonToolChoice.setItemMeta(metaToolChoice);
