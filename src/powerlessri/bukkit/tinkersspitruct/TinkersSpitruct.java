@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
+import powerlessri.bukkit.tinkersspitruct.effects.ItemGlowingEffect;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryEventHandler;
 import powerlessri.bukkit.tinkersspitruct.events.calls.EventCalls;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
@@ -36,6 +38,9 @@ public class TinkersSpitruct extends JavaPlugin {
     @FinalField
     public Map<String, EventCalls> eventCalls;
     
+    @FinalField
+    public ItemGlowingEffect glow;
+    
     public LangMap lang;
     
     @Override
@@ -47,6 +52,7 @@ public class TinkersSpitruct extends JavaPlugin {
         
         this.pranker = new MainPranker(this);
         this.eventCalls = new HashMap<String, EventCalls>();
+        this.glow = ItemGlowingEffect.registerGlow();
         
         CommonTags.resetItemTagFixers(PLUGIN_ID);
         
@@ -54,7 +60,7 @@ public class TinkersSpitruct extends JavaPlugin {
         
         this.getCommand("spitruct").setExecutor(new CommandSpitructDebug());
         
-        Bukkit.getPluginManager().registerEvents(new InventoryEventHandler(), this);
+        registerEvent(new InventoryEventHandler());
         
         Runnable testCall = () -> {
             getLogger().info("item got clicked!");
@@ -122,12 +128,17 @@ public class TinkersSpitruct extends JavaPlugin {
         return this.eventCalls.entrySet().iterator().next().getValue();
     }
     
-    public void reloadLang(String file) {
+    
+    private void registerEvent(Listener event) {
+        Bukkit.getPluginManager().registerEvents(event, this);
+    }
+    
+    private void reloadLang(String file) {
         this.lang = new LangMap(getLogger(), PLUGIN_ID);
         this.loadLang(file);
     }
     
-    public void loadLang(String file) {
+    private void loadLang(String file) {
         this.lang.load(file);
     }
     

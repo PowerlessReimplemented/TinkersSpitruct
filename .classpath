@@ -7,6 +7,6 @@
 			<attribute name="javadoc_location" value="https://hub.spigotmc.org/javadocs/spigot/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/prgms/Downloads/tmp/1/testing.minecraft/.minecraft/versions/Servers/logs/localhost/1.12.2spigot/spigot-1.12.2.jar"/>
+	<classpathentry kind="lib" path="C:/prgms/Downloads/tmp/1/testing.minecraft/.minecraft/versions/Servers/logs/Minecraft/localhost/1.12.2spigot/spigot-1.12.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
