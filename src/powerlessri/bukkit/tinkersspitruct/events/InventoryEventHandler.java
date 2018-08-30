@@ -28,13 +28,7 @@ public class InventoryEventHandler implements Listener {
     
 
     private void processStackClickEvent(NBTTagCompound tag) {
-        if(tag.hasKey(ItemTags.CLICK_EVENT_CATEGORY.getKey()) &&
-                tag.hasKey(ItemTags.CLICK_EVENT_ID.getKey())) {
-            
-            TinkersSpitruct.plugin
-                .getEventCalls(tag.getString(ItemTags.CLICK_EVENT_CATEGORY.getKey()))
-                .call(tag.getInt(ItemTags.CLICK_EVENT_ID.getKey()));
-        }
+        if(tag.hasKey(InventoryToolBuilder.))
     }
     
     private boolean shouldCancelImmovable(NBTTagCompound tag) {

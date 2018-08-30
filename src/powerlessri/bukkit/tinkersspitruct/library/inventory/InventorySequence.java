@@ -9,25 +9,27 @@ import org.bukkit.inventory.Inventory;
  * A inventory provider that is used for switch between different modes
  * on a machine.
  */
-public class CompoundInventories {
+public class InventorySequence {
     
     private final Map<String, Inventory> inventoryList;
-    private String key;
+    private String currentKey;
     
-    public CompoundInventories() {
+    public InventorySequence() {
         this.inventoryList = new HashMap<String, Inventory>();
     }
     
     public void setCurrentInventory(String key) {
-        this.key = key;
+        this.currentKey = key;
     }
     
     public Inventory getInventory() {
-        if(this.inventoryList.containsKey(key)) {
-            return this.inventoryList.get(key);
+        Inventory result = this.inventoryList.get(this.currentKey);
+        
+        if(result == null) {
+            return this.inventoryList.entrySet().iterator().next().getValue();
         }
         
-        return this.inventoryList.entrySet().iterator().next().getValue();
+        return result;
     }
     
     public void addInventory(String key, Inventory inventory) {

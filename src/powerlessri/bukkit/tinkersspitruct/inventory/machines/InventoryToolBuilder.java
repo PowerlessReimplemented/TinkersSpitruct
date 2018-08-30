@@ -1,53 +1,56 @@
 package powerlessri.bukkit.tinkersspitruct.inventory.machines;
 
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.inventory.IMachineInventoryBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.CompoundInventories;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
+import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
+import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequenceBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 // Somehow make everything static does not work
 public class InventoryToolBuilder implements IMachineInventoryBuilder {
+    
+    public static final String IS_TOOL_BUILDER = "isToolBuilder";
+    
+    private final String TOOL_BUILDER_CLICK_EVENT;
+    private final byte BUILDER_PAGE;
+    private final byte TOOL_CHOICE_PAGE;
 
     private final String INVENTORY_TITLE;
 
     private final InventoryBuilder builder;
     private final InventoryBuilder toolChoice;
+    
+    private final InventorySequenceBuilder sequence;
 
     public InventoryToolBuilder(String... listAviliableTools) {
-
-        Runnable builderButton = () -> {
-
-        };
-        Runnable toolChoiceButton = () -> {
-
-        };
-
-        int buttonBuilderId = TinkersSpitruct.plugin.addEventCall("inventoryEntry_toolBuilder", builderButton);
-        int buttonToolChoiceId = TinkersSpitruct.plugin.addEventCall("inventoryEntry_toolBuilder", toolChoiceButton);
-
-        // ================================ //
-
+        
+        this.TOOL_BUILDER_CLICK_EVENT = "toolBuilderClickEvent";
+        this.BUILDER_PAGE = (byte) 0;
+        this.TOOL_CHOICE_PAGE = (byte) 1;
+        
         this.INVENTORY_TITLE = TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.title");
 
         NBTTagCompound rootTag = new NBTTagCompound();
         rootTag.set(TinkersSpitruct.PLUGIN_ID, new NBTTagCompound());
 
         NBTTagCompound pluginTag = rootTag.getCompound(TinkersSpitruct.PLUGIN_ID);
+        pluginTag.setBoolean(IS_TOOL_BUILDER, true);
         pluginTag.setBoolean(ItemTags.IS_STACK_IMMOVABLE.getKey(), true);
-        pluginTag.setString(ItemTags.CLICK_EVENT_CATEGORY.getKey(), "inventoryEntry_toolBuilder");
 
         NBTTagCompound buttonBuilderTag = (NBTTagCompound) pluginTag.clone();
         NBTTagCompound buttonToolChoiceTag = (NBTTagCompound) pluginTag.clone();
 
-        buttonBuilderTag.setInt(ItemTags.CLICK_EVENT_ID.getKey(), buttonBuilderId);
-        buttonToolChoiceTag.setInt(ItemTags.CLICK_EVENT_ID.getKey(), buttonToolChoiceId);
+        buttonBuilderTag.setByte(this.TOOL_BUILDER_CLICK_EVENT, this.BUILDER_PAGE);
+        buttonToolChoiceTag.setByte(this.TOOL_BUILDER_CLICK_EVENT, this.TOOL_CHOICE_PAGE);
 
         ItemStack buttonBuilder = TagHelper.getStackWithTag(new ItemStack(Material.FURNACE), buttonBuilderTag);
         ItemStack buttonToolChoice = TagHelper.getStackWithTag(new ItemStack(Material.DIAMOND_PICKAXE), buttonToolChoiceTag);
@@ -67,8 +70,8 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
         // ================================ //
 
-        this.builder = InventoryBuilder.createBuilder(6, this.INVENTORY_TITLE);
-        this.toolChoice = InventoryBuilder.createBuilder(6, this.INVENTORY_TITLE);
+        this.builder = new InventoryBuilder("toolBuilder.builder", 6, this.INVENTORY_TITLE);
+        this.toolChoice = new InventoryBuilder("toolBuilder.toolChoice", 6, this.INVENTORY_TITLE);
 
         this.builder.addImmovableSlot(0, buttonToolChoice);
         this.toolChoice.addImmovableSlot(0, buttonToolChoice);
@@ -76,17 +79,18 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         this.builder.blockEmptySlots();
         this.toolChoice.blockEmptySlots();
 
-
+        this.sequence = new InventorySequenceBuilder("tile.toolBuilder", this.builder, this.toolChoice);
     }
 
     @Override
-    public CompoundInventories makeInventory() {
-        CompoundInventories result = new CompoundInventories();
+    public InventorySequence makeInventory() {
+        return sequence.makeInventory();
+    }
 
-        result.addInventory("builder", this.builder.makeInventory());
-        result.addInventory("toolChoice", this.toolChoice.makeInventory());
-
-        return result;
+    @Override
+    public void handleStackClicked(InventoryClickEvent event) {
+        Inventory inventory = event.getInventory();
+        
     }
 
 }

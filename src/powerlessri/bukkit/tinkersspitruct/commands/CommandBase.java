@@ -8,4 +8,8 @@ public abstract class CommandBase implements CommandExecutor {
         
     }
     
+    public String getName() {
+        return "";
+    }
+    
 }

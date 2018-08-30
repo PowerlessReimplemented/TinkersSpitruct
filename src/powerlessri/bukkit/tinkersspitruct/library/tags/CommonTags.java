@@ -4,8 +4,9 @@ import java.util.stream.Stream;
 
 import org.bukkit.inventory.ItemStack;
 
+import net.minecraft.server.v1_12_R1.NBTBase;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
+import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 public class CommonTags {
     
@@ -19,6 +20,7 @@ public class CommonTags {
         ROOT_TAG("", CommonTags.ROOT_PLUGIN_TAG_FIXER),
         
         IS_STACK_IMMOVABLE("isStackImmovable", CommonTags.IMMOVABLE_STACK_FIXER),
+        
         CLICK_EVENT_CATEGORY("clickEventCategory", CommonTags.CLICK_EVENT_BOND_FIXER),
         CLICK_EVENT_ID("clickEventId", CommonTags.CLICK_EVENT_BOND_FIXER);
         
@@ -30,7 +32,40 @@ public class CommonTags {
             this.fixer = fixer;
         }
         
-        public ItemStack fixItem(ItemStack stack) {
+        public boolean isInPath(ItemStack stack) {
+            NBTTagCompound tag = TagHelper.getStackTag(stack);
+            
+            if(tag != null) {
+                NBTTagCompound working = tag;
+                
+                for(int i = 0; i < rootPath.length; i++) {
+                    working = working.getCompound(rootPath[i]);
+                }
+                
+                NBTBase result = working.get(this.key);
+                
+                if(result == null) {
+                    return false;
+                }
+                
+                return !result.isEmpty();
+            }
+            
+            return false;
+        }
+        
+        public boolean is(ItemStack stack) {
+            NBTTagCompound tag = TagHelper.getStackTag(stack);
+            
+            if(tag != null) {
+                //TODO check if .get ever returns null, and add corresponding conditions
+                return !tag.getCompound(rootPath[0]).get(this.key).isEmpty();
+            }
+            
+            return false;
+        }
+        
+        public ItemStack fix(ItemStack stack) {
             return this.fixer.fixItem(stack);
         }
         
@@ -42,13 +77,15 @@ public class CommonTags {
     }
     
     
+    private static String[] rootPath;
     
-    public static final TaggedItemChanger ROOT_PLUGIN_TAG_FIXER = TaggedItemChanger.fixerOf(null);
-    
-    public static final TaggedItemChanger IMMOVABLE_STACK_FIXER = TaggedItemChanger.fixerOf(null);
-    public static final TaggedItemChanger CLICK_EVENT_BOND_FIXER = TaggedItemChanger.fixerOf(null);
+    private static final TaggedItemChanger ROOT_PLUGIN_TAG_FIXER = TaggedItemChanger.fixerOf(null);
+    private static final TaggedItemChanger IMMOVABLE_STACK_FIXER = TaggedItemChanger.fixerOf(null);
+    private static final TaggedItemChanger CLICK_EVENT_BOND_FIXER = TaggedItemChanger.fixerOf(null);
     
     public static void resetItemTagFixers(String... rootPath) {
+        CommonTags.rootPath = rootPath;
+        
         ROOT_PLUGIN_TAG_FIXER.addRule((tag) -> {
             Stream.of(rootPath).forEach((key) -> {
                 tag.set(key, new NBTTagCompound());

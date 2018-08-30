@@ -1,8 +1,9 @@
-package powerlessri.bukkit.tinkersspitruct.events.calls;
+package powerlessri.bukkit.tinkersspitruct.events;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class EventCalls {
     
     private List<Runnable> calls;

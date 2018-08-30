@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
-import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class InventoryBuilder {
     
@@ -16,41 +16,61 @@ public class InventoryBuilder {
     
     /** A light gray glass pane for blocking the inventory */
     public static final ItemStack SLOT_BLOCKER_GLASSPANE = 
-            ItemTags.IS_STACK_IMMOVABLE.fixItem(
-            ItemTags.ROOT_TAG.fixItem(
+            ItemTags.IS_STACK_IMMOVABLE.fix(
+            ItemTags.ROOT_TAG.fix(
                     TagHelper.getTaggedStack(
                             new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8))));
     
     static {
+        ItemMeta blockerMeta = SLOT_BLOCKER_GLASSPANE.getItemMeta();
+        
+        blockerMeta.setDisplayName("");
+        
+        SLOT_BLOCKER_GLASSPANE.setItemMeta(blockerMeta);
     }
     
-    public static InventoryBuilder createBuilder(int amountRows, String title) {
-        InventoryBuilder builder = new InventoryBuilder();
-        builder.clear(amountRows * 9, title);
-        return builder;
+    
+    
+    private static int currentId = 0;
+    
+    private static int nextId() {
+        return currentId++;
     }
     
     
-    public InventoryBuilder() {
-    }
     
-    private int amountSlots;
-    private String inventoryTitle;
+    public final String id;
+    public final int amountRows;
+    public final int amountSlots;
+    
+    private final String inventoryTitle;
     
     private ItemStack[] inventoryMap;
     
-    public void clear(int amountSlots, String title) {
-        this.amountSlots = amountSlots;
+    @Deprecated
+    public InventoryBuilder(int amountRows) {
+        this(amountRows, "Chest");
+    }
+    
+    @Deprecated
+    public InventoryBuilder(int amountRows, String title) {
+        this(String.valueOf(nextId()), amountRows, title);
+    }
+    
+    /** Parameter {@code id} is suggested to be unique, but does not need to be inside this implementation. */
+    public InventoryBuilder(String id, int amountRows, String title) {
+        this.id = id;
+        
+        this.amountRows = amountRows;
+        this.amountSlots = amountRows * 9;
         this.inventoryTitle = title;
         
-        // 9 * 6 (amount per row * maximum amount of rows)
         this.inventoryMap = new ItemStack[amountSlots];
     }
     
     public void addImmovableSlot(int slot, ItemStack stack) {
-        if(!PluginTagHelper.isStackImmovable(stack)) {
-//            TinkersSpitruct.plugin.getLogger().info(stack.toString());
-            stack = ItemTags.IS_STACK_IMMOVABLE.fixItem(stack);
+        if(!ItemTags.IS_STACK_IMMOVABLE.is(stack)) {
+            stack = ItemTags.IS_STACK_IMMOVABLE.fix(stack);
         }
         
         this.inventoryMap[slot] = stack;

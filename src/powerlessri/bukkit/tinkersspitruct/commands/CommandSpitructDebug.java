@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.CompoundInventories;
+import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
@@ -48,7 +48,7 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 player.sendMessage("trying to open inventory...");
-                CompoundInventories compound = TinkersSpitruct.plugin.toolBuilders.getInventory(new BlockPosition(0, 0, 0));
+                InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getInventory(new BlockPosition(0, 0, 0));
                 compound.setCurrentInventory("builder");
                 Inventory inventory = compound.getInventory();
                 
@@ -60,6 +60,11 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                 player.openInventory(inventory);
             }
         });
+    }
+    
+    @Override
+    public String getName() {
+        return "spirtuct";
     }
 
     @Override

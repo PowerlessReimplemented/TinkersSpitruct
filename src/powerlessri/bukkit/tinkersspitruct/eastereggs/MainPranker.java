@@ -4,21 +4,21 @@ import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 
 public class MainPranker {
     
-    private final TinkersSpitruct plugin;
-    
-    
-    public MainPranker(TinkersSpitruct plugin) {
-        this.plugin = plugin;
+    public MainPranker() {
     }
 
     public void consolePrank(String prank) {
-        plugin.getLogger().info(prank);
+        TinkersSpitruct.plugin.getLogger().info(prank);
     }
     
     
     
     public void doConsolePranks() {
-        this.consolePrank(plugin.lang.translate("prank.startUp.tic&natura"));
+        this.consolePrank(TinkersSpitruct.plugin.lang.translate("prank.startUp.tic&natura"));
+    }
+    
+    public void haha() {
+        this.consolePrank(TinkersSpitruct.plugin.lang.translate("prank.messages.haha"));
     }
     
 }
