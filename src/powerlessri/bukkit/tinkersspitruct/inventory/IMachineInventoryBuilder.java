@@ -1,6 +1,7 @@
 package powerlessri.bukkit.tinkersspitruct.inventory;
 
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -15,8 +16,8 @@ public interface IMachineInventoryBuilder {
     InventorySequence makeInventory();
     
     /** An UUID:Inventory map for storing playing specific data */
-    Map<Long, InventorySequence> getPlayerMap();
+    Map<UUID, InventorySequence> getPlayerMap();
     
-    InventorySequence getPlayerOwnedInv(Long uuid);
+    InventorySequence getPlayerOwnedInv(UUID uuid);
     
 }

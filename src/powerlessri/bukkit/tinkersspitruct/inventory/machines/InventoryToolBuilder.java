@@ -1,7 +1,10 @@
 package powerlessri.bukkit.tinkersspitruct.inventory.machines;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -9,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.inventory.IMachineInventoryBuilder;
@@ -34,7 +38,8 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
     private final InventorySequenceBuilder sequence;
 
-    private final Map<Long, InventorySequence> playerMap;
+    private final Map<UUID, InventorySequence> playerMap;
+    private final Set<BlockPosition> activePoses;
 
     public InventoryToolBuilder(String... listAviliableTools) {
 
@@ -51,19 +56,19 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         pluginTag.setBoolean(IS_TOOL_BUILDER, true);
         pluginTag.setBoolean(ItemTags.IS_STACK_IMMOVABLE.getKey(), true);
 
-        NBTTagCompound buttonBuilderTag = (NBTTagCompound) pluginTag.clone();
-        NBTTagCompound buttonToolChoiceTag = (NBTTagCompound) pluginTag.clone();
+        NBTTagCompound buttonBuilderTag = (NBTTagCompound) rootTag.clone();
+        NBTTagCompound buttonToolChoiceTag = (NBTTagCompound) rootTag.clone();
 
-        buttonBuilderTag.setByte(this.TOOL_BUILDER_CLICK_EVENT, this.BUILDER_PAGE);
-        buttonToolChoiceTag.setByte(this.TOOL_BUILDER_CLICK_EVENT, this.TOOL_CHOICE_PAGE);
+        buttonBuilderTag.getCompound(TinkersSpitruct.PLUGIN_ID).setByte(this.TOOL_BUILDER_CLICK_EVENT, this.BUILDER_PAGE);
+        buttonToolChoiceTag.getCompound(TinkersSpitruct.PLUGIN_ID).setByte(this.TOOL_BUILDER_CLICK_EVENT, this.TOOL_CHOICE_PAGE);
 
         ItemStack buttonBuilder = TagHelper.getStackWithTag(new ItemStack(Material.FURNACE), buttonBuilderTag);
         ItemStack buttonToolChoice = TagHelper.getStackWithTag(new ItemStack(Material.DIAMOND_PICKAXE), buttonToolChoiceTag);
 
+        // ================================ //
+
         ItemMeta metaBuilder = buttonBuilder.getItemMeta();
         ItemMeta metaToolChoice = buttonToolChoice.getItemMeta();
-
-        // ================================ //
 
         metaBuilder.setDisplayName( TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.button.builder") );
         metaToolChoice.setDisplayName( TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.button.toolChoice") );
@@ -88,7 +93,8 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
         // ================================ //
 
-        this.playerMap = new HashMap<Long, InventorySequence>();
+        this.playerMap = new HashMap<UUID, InventorySequence>();
+        this.activePoses = new HashSet<BlockPosition>();
     }
 
     @Override
@@ -112,22 +118,22 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
     // ======== Handles end ======== //
 
     @Override
-    public Map<Long, InventorySequence> getPlayerMap() {
+    public Map<UUID, InventorySequence> getPlayerMap() {
         return this.playerMap;
     }
 
     @Override
-    public InventorySequence getPlayerOwnedInv(Long uuid) {
+    public InventorySequence getPlayerOwnedInv(UUID uuid) {
         InventorySequence result = this.playerMap.get(uuid);
-        
+
         if(result == null) {
             result = this.makeInventory();
             this.playerMap.put(uuid, result);
         }
-        
+
         return result;
     }
-    
-    
+
+
 
 }

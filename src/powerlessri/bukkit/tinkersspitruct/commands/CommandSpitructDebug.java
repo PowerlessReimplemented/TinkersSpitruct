@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
@@ -16,7 +15,7 @@ import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 public class CommandSpitructDebug extends CommandBranchedBase {
     
     public CommandSpitructDebug() {
-        super();
+        super("spitruct");
         
         this.addOption("updateHand", (sender, args) -> {
             if(args.length > 0) {
@@ -29,7 +28,7 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                 ItemStack hand = player.getInventory().getItemInMainHand();
                 
                 if(PluginTagHelper.hasPluginTag(hand)) {
-                    NBTTagCompound tag = PluginTagHelper.getPluginTag(hand);
+//                    NBTTagCompound tag = PluginTagHelper.getPluginTag(hand);
                     
 //                    ToolDataHandler.updateToolData(tag);
                 }
@@ -44,11 +43,12 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                 player.sendMessage(tag == null ? "[no nbt tag]" : tag.toString());
             }
         });
+        
         this.addOption("inventoryTest1", (sender, args) -> {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 player.sendMessage("trying to open inventory...");
-                InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId().getMostSignificantBits() );
+                InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId());
                 compound.setCurrentInventory("builder");
                 Inventory inventory = compound.getInventory();
                 
@@ -60,11 +60,6 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                 player.openInventory(inventory);
             }
         });
-    }
-    
-    @Override
-    public String getName() {
-        return "spirtuct";
     }
 
     @Override

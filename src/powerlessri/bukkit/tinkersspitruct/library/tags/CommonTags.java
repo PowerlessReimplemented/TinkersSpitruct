@@ -39,6 +39,10 @@ public class CommonTags {
                 NBTTagCompound working = tag;
                 
                 for(int i = 0; i < rootPath.length; i++) {
+                    if(working == null) {
+                        return false;
+                    }
+                    
                     working = working.getCompound(rootPath[i]);
                 }
                 
@@ -58,8 +62,15 @@ public class CommonTags {
             NBTTagCompound tag = TagHelper.getStackTag(stack);
             
             if(tag != null) {
-                //TODO check if .get ever returns null, and add corresponding conditions
-                return !tag.getCompound(rootPath[0]).get(this.key).isEmpty();
+                NBTTagCompound mainTag = tag.getCompound(rootPath[0]);
+                
+                if(mainTag != null) {
+                    NBTBase result = mainTag.get(this.key);
+                    
+                    if(result != null) {
+                        return !result.isEmpty();
+                    }
+                }
             }
             
             return false;

@@ -11,12 +11,23 @@ import org.bukkit.command.CommandSender;
 
 public abstract class CommandBranchedBase extends CommandBase {
     
+    private final String name;
     private final Map<String, BiConsumer<CommandSender, String[]>> options;
     
     public CommandBranchedBase() {
-        options = new HashMap<String, BiConsumer<CommandSender, String[]>>();
+        this("");
+    }
+    
+    public CommandBranchedBase(String name) {
+        this.name = name;
+        this.options = new HashMap<String, BiConsumer<CommandSender, String[]>>();
     }
 
+    @Override
+    public String getName() {
+        return this.name;
+    }
+    
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         return false;

@@ -13,7 +13,7 @@ import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.effects.ItemGlowingEffect;
 import powerlessri.bukkit.tinkersspitruct.events.EventCalls;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryEventHandler;
-import powerlessri.bukkit.tinkersspitruct.inventory.PluginInventories;
+import powerlessri.bukkit.tinkersspitruct.inventory.PositionalInventoryStorage;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
@@ -39,13 +39,12 @@ public class TinkersSpitruct extends JavaPlugin {
     public Map<String, EventCalls> eventCalls;
     
     public InventoryToolBuilder toolBuilders;
-    public PluginInventories partBuilders;
-    public PluginInventories stencilTables;
+//    public PositionalInventoryStorage partBuilders;
+//    public PositionalInventoryStorage stencilTables;
+//    
+//    public PositionalInventoryStorage partternChests;
+//    public PositionalInventoryStorage partChests;
     
-    public PluginInventories partternChests;
-    public PluginInventories partChests;
-    
-    @FinalField
     public ItemGlowingEffect glow;
     
     public LangMap lang;
