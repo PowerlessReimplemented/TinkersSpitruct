@@ -45,21 +45,29 @@ public class CommandSpitructDebug extends CommandBranchedBase {
         });
         
         this.addOption("inventoryTest1", (sender, args) -> {
-            if(sender instanceof Player) {
-                Player player = (Player) sender;
-                player.sendMessage("trying to open inventory...");
-                InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId());
-                compound.setCurrentInventory("builder");
-                Inventory inventory = compound.getInventory();
-                
-                if(inventory == null) {
-                    player.sendMessage("failed to open inventory");
-                    return;
-                }
-                
-                player.openInventory(inventory);
-            }
+            this.inventoryTest(sender, "toolBuilder.builder");
         });
+        this.addOption("inventoryTest2", (sender, args) -> {
+            this.inventoryTest(sender, "toolBuilder.toolChoice");
+        });
+        
+    }
+    
+    private void inventoryTest(CommandSender sender, String key) {
+        if(sender instanceof Player) {
+            Player player = (Player) sender;
+            player.sendMessage("trying to open inventory...");
+            InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId());
+            compound.setCurrentInventory(key);
+            Inventory inventory = compound.getInventory();
+            
+            if(inventory == null) {
+                player.sendMessage("failed to open inventory");
+                return;
+            }
+            
+            player.openInventory(inventory);
+        }
     }
 
     @Override

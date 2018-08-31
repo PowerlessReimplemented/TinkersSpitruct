@@ -3,8 +3,10 @@ package powerlessri.bukkit.tinkersspitruct.events;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
@@ -15,10 +17,13 @@ public class InventoryEventHandler implements Listener {
     
     @EventHandler
     public void onInventoryClicked(InventoryClickEvent event) {
-        if(PluginTagHelper.hasPluginTag(event.getCurrentItem())) {
-            NBTTagCompound tag = PluginTagHelper.getPluginTag(event.getCurrentItem());
+        TinkersSpitruct plugin = TinkersSpitruct.plugin;
+        ItemStack stack = event.getCurrentItem();
+        
+        if(PluginTagHelper.hasPluginTag(stack)) {
+            NBTTagCompound tag = PluginTagHelper.getPluginTag(stack);
             
-//            this.processStackClickEvent(tag);
+            plugin.toolBuilders.handleStackClicked(event, stack, tag);;
             
             event.setCancelled(shouldCancelImmovable(tag));
         }

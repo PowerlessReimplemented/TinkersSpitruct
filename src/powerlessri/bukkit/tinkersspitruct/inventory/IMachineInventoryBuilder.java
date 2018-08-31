@@ -4,13 +4,16 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
+import net.minecraft.server.v1_12_R1.BlockPosition;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 
 /** Builder for making compound inventories */
 public interface IMachineInventoryBuilder {
     
-    void handleStackClicked(InventoryClickEvent event);
+    void handleStackClicked(InventoryClickEvent event, ItemStack stack, NBTTagCompound tag);
     void handleInventorySwitching(InventorySequence inventories);
     
     InventorySequence makeInventory();
@@ -19,5 +22,8 @@ public interface IMachineInventoryBuilder {
     Map<UUID, InventorySequence> getPlayerMap();
     
     InventorySequence getPlayerOwnedInv(UUID uuid);
+    
+    boolean doesPosExists(int x, int y, int z);
+    boolean doesPosExists(BlockPosition pos);
     
 }

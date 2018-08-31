@@ -33,6 +33,10 @@ public class InventorySequence {
     }
     
     public void addInventory(String key, Inventory inventory) {
+        if(this.currentKey == null || this.currentKey.equals("")) {
+            this.currentKey = key;
+        }
+        
         this.inventoryList.put(key, inventory);
     }
     
