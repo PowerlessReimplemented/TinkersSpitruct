@@ -44,7 +44,14 @@ public class PluginTagHelper {
     }
     
     public static ItemStack saveToStack(ItemStack stack, NBTTagCompound tag) {
-        return TagHelper.getStackWithTag(stack, tag);
+        NBTTagCompound rootTag = TagHelper.getStackTag(stack);
+        
+        if(rootTag != null) {
+            rootTag.set(TinkersSpitruct.PLUGIN_ID, tag);
+            return TagHelper.getStackWithTag(stack, rootTag);
+        }
+        
+        return stack;
     }
     
     

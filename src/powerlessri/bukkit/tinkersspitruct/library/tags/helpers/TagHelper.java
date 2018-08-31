@@ -1,11 +1,10 @@
 package powerlessri.bukkit.tinkersspitruct.library.tags.helpers;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.meta.When;
 
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 
@@ -55,6 +54,11 @@ public class TagHelper {
     
    
     
+    public static void setStackName(ItemStack stack, String name) {
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(name);
+        stack.setItemMeta(meta);
+    }
     
     
 //    @Deprecated

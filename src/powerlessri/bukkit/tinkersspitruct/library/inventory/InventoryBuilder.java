@@ -73,6 +73,10 @@ public class InventoryBuilder {
             stack = ItemTags.IS_STACK_IMMOVABLE.fix(stack);
         }
         
+        this.addSlot(slot, stack);
+    }
+    
+    public void addSlot(int slot, ItemStack stack) {
         this.inventoryMap[slot] = stack;
     }
     

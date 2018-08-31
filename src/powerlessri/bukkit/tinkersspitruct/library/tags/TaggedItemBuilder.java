@@ -2,7 +2,9 @@ package powerlessri.bukkit.tinkersspitruct.library.tags;
 
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
@@ -28,9 +30,12 @@ public class TaggedItemBuilder {
     /** Reference to the tag (inside {@code rootTag}) */
     private NBTTagCompound workingPointer;
     
+    private ItemMeta defaultMeta;
+    
     public TaggedItemBuilder() {
         this.rootTag = new NBTTagCompound();
         this.workingPointer = rootTag;
+        this.defaultMeta = new ItemStack(Material.STONE).getItemMeta();
     }
     
     
@@ -86,13 +91,20 @@ public class TaggedItemBuilder {
     }
     
     
+    public void addEnchant(Enchantment enchantment, int level) {
+        this.defaultMeta.addEnchant(enchantment, level, true);
+    }
+    
+    
     
     public ItemStack buildItem(Material item) {
         NBTTagCompound stackTag = (NBTTagCompound) this.rootTag.clone();
         net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(new ItemStack(item));
         nmsStack.setTag(stackTag);
         
-        return CraftItemStack.asCraftMirror(nmsStack);
+        ItemStack result = CraftItemStack.asCraftMirror(nmsStack);
+        result.setItemMeta(this.defaultMeta.clone());
+        return result;
     }
     
 }
