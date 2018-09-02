@@ -1,12 +1,11 @@
 package powerlessri.bukkit.tinkersspitruct.library.tags;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagList;
 import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 public class TaggedItemBuilder {
@@ -30,12 +29,9 @@ public class TaggedItemBuilder {
     /** Reference to the tag (inside {@code rootTag}) */
     private NBTTagCompound workingPointer;
     
-    private ItemMeta defaultMeta;
-    
     public TaggedItemBuilder() {
         this.rootTag = new NBTTagCompound();
         this.workingPointer = rootTag;
-        this.defaultMeta = new ItemStack(Material.STONE).getItemMeta();
     }
     
     
@@ -91,19 +87,28 @@ public class TaggedItemBuilder {
     }
     
     
+    /** Might cause unexpected effect, add item meta afterwards yourself. */
+    @Deprecated
     public void addEnchant(Enchantment enchantment, int level) {
-        this.defaultMeta.addEnchant(enchantment, level, true);
+        if(!this.rootTag.hasKey("ench")) {
+            this.rootTag.set("ench", new NBTTagList());
+        }
+        
+        NBTTagList ench = this.rootTag.getList("ench", 0);
+        NBTTagCompound enchElement = new NBTTagCompound();
+        
+        enchElement.setShort("id", (short) enchantment.getId());
+        enchElement.setShort("lvl", (short) level);
+        
+        ench.add(enchElement);
     }
     
     
     
-    public ItemStack buildItem(Material item) {
-        NBTTagCompound stackTag = (NBTTagCompound) this.rootTag.clone();
-        net.minecraft.server.v1_12_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(new ItemStack(item));
-        nmsStack.setTag(stackTag);
+    public ItemStack buildItem(Material material) {
+        NBTTagCompound tag = (NBTTagCompound) this.rootTag.clone();
+        ItemStack result = TagHelper.getStackWithTag(new ItemStack(material), tag);
         
-        ItemStack result = CraftItemStack.asCraftMirror(nmsStack);
-        result.setItemMeta(this.defaultMeta.clone());
         return result;
     }
     

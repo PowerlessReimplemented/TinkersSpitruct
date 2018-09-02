@@ -3,6 +3,7 @@ package powerlessri.bukkit.tinkersspitruct.library.tags.helpers;
 import javax.annotation.Nullable;
 
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -54,31 +55,18 @@ public class TagHelper {
     
    
     
+    // These methods are in TagHelper because they relys on nbt in Vanilla Minecraft
+    
     public static void setStackName(ItemStack stack, String name) {
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(name);
         stack.setItemMeta(meta);
     }
     
-    
-//    @Deprecated
-//    public static NBTTagCompound getTagSafe(ItemStack stack, String key) {
-//        return getTagSafe(CraftItemStack.asNMSCopy(stack), key);
-//    }
-//    
-//    @Deprecated
-//    public static NBTTagCompound getTagSafe(net.minecraft.server.v1_12_R1.ItemStack stack, String key) {
-//        return getTagSafe(getStackTag(stack), key);
-//    }
-//    
-//    /** Get a sub tag from the root tag. Will create an empty tag if the root tag doesn't have one. */
-//    @Deprecated
-//    public static NBTTagCompound getTagSafe(NBTTagCompound parent, String key) {
-//        if(!parent.hasKey(key)) {
-//            parent.set(key, new NBTTagCompound());
-//        }
-//        
-//        return parent.getCompound(key);
-//    }
+    public static void addEnchantment(ItemStack stack, Enchantment enchant, int level) {
+        ItemMeta meta = stack.getItemMeta();
+        meta.addEnchant(enchant, level, true);
+        stack.setItemMeta(meta);
+    }
     
 }

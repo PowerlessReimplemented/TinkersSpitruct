@@ -17,9 +17,14 @@ public class PluginTagHelper {
     @Nullable
     public static NBTTagCompound getPluginTag(ItemStack stack) {
         NBTTagCompound tag = TagHelper.getStackTag(stack);
-        NBTTagCompound pluginTag = tag.getCompound(TinkersSpitruct.PLUGIN_ID);
         
-        return pluginTag;
+        if(tag != null) {
+            NBTTagCompound pluginTag = tag.getCompound(TinkersSpitruct.PLUGIN_ID);
+            
+            return pluginTag;
+        }
+        
+        return null;
     }
     
     

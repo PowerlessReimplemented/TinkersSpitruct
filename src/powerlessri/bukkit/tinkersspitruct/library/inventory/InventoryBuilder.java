@@ -97,7 +97,7 @@ public class InventoryBuilder {
         
         for(int i = 0; i < this.amountSlots; i++) {
             if(this.inventoryMap[i] != null && this.inventoryMap[i] != EMPTY_STACK) {
-                // When adding an ItemStack to an inventory, the inventory will
+                // When adding an ItemStack to an inventory, it will
                 // automatically make a copy of the ItemStack.
                 result.setItem(i, this.inventoryMap[i]);
             }

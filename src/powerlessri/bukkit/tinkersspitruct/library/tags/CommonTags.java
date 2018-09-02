@@ -38,7 +38,9 @@ public class CommonTags {
             if(tag != null) {
                 NBTTagCompound working = tag;
                 
+                // Follow the path to the actual workspace tag
                 for(int i = 0; i < rootPath.length; i++) {
+                    // We don't want mess around with a wrong path
                     if(working == null) {
                         return false;
                     }

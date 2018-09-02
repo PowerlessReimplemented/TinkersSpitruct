@@ -20,9 +20,10 @@ public class InventoryEventHandler implements Listener {
         TinkersSpitruct plugin = TinkersSpitruct.plugin;
         ItemStack stack = event.getCurrentItem();
         
-        if(PluginTagHelper.hasPluginTag(stack)) {
-            NBTTagCompound tag = PluginTagHelper.getPluginTag(stack);
-            
+        NBTTagCompound tag = PluginTagHelper.getPluginTag(stack);
+        
+        // Start counting slot from top, so the non-player inventory always have the same slot & raw slot
+        if(event.getSlot() == event.getRawSlot() && tag != null) {
             plugin.toolBuilders.handleStackClicked(event, stack, tag);;
             
             event.setCancelled(shouldCancelImmovable(tag));
@@ -31,9 +32,6 @@ public class InventoryEventHandler implements Listener {
     
     
 
-//    private void processStackClickEvent(NBTTagCompound tag) {
-//        if(tag.hasKey(InventoryToolBuilder.))
-//    }
     
     private boolean shouldCancelImmovable(NBTTagCompound tag) {
         if(tag.hasKey(ItemTags.IS_STACK_IMMOVABLE.getKey())) {
