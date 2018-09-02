@@ -10,9 +10,9 @@ import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
-public class InventoryEventHandler implements Listener {
+public class InventoryClickHandler implements Listener {
 
-    public InventoryEventHandler() {
+    public InventoryClickHandler() {
     }
     
     @EventHandler

@@ -12,7 +12,8 @@ import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.effects.ItemGlowingEffect;
 import powerlessri.bukkit.tinkersspitruct.events.EventCalls;
-import powerlessri.bukkit.tinkersspitruct.events.InventoryEventHandler;
+import powerlessri.bukkit.tinkersspitruct.events.InventoryClickHandler;
+import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
 import powerlessri.bukkit.tinkersspitruct.inventory.PositionalInventoryStorage;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
@@ -34,9 +35,8 @@ public class TinkersSpitruct extends JavaPlugin {
     @FinalField
     public MainPranker pranker;
     
-    @FinalField
-    @Deprecated
-    public Map<String, EventCalls> eventCalls;
+    public InventoryClickHandler clickHandler;
+    public WorldInteractionHandler interactionHandler;
     
     public InventoryToolBuilder toolBuilders;
 //    public PositionalInventoryStorage partBuilders;
@@ -58,7 +58,6 @@ public class TinkersSpitruct extends JavaPlugin {
         PluginReference.addPlugin(this);
         
         this.pranker = new MainPranker();
-        this.eventCalls = new HashMap<String, EventCalls>();
         
         this.glow = ItemGlowingEffect.registerGlow();
         
@@ -66,12 +65,13 @@ public class TinkersSpitruct extends JavaPlugin {
         
         registerCommand(new CommandSpitructDebug());
         
-        registerEvent(new InventoryEventHandler());
+        this.clickHandler = new InventoryClickHandler();
+        this.interactionHandler = new WorldInteractionHandler();
+        registerEvent(this.clickHandler);
+        registerEvent(this.interactionHandler);
         
         this.toolBuilders = new InventoryToolBuilder();
         
-        
-        getLogger().info(PLUGIN_ID + " loaded.");
         
         this.pranker.doConsolePranks();
         this.pranker.haha();
@@ -81,23 +81,6 @@ public class TinkersSpitruct extends JavaPlugin {
     public void onDisable() {
     }
     
-    
-    
-    public int addEventCall(String category, Runnable call) {
-        if(!this.eventCalls.containsKey(category)) {
-            this.eventCalls.put(category, new EventCalls());
-        }
-        
-        return this.eventCalls.get(category).registerCall(call);
-    }
-    
-    public EventCalls getEventCalls(String category) {
-        if(this.eventCalls.containsKey(category)) {
-            return this.eventCalls.get(category);
-        }
-        
-        return this.eventCalls.entrySet().iterator().next().getValue();
-    }
     
     
     private void registerEvent(Listener event) {

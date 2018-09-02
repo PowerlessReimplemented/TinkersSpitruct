@@ -239,7 +239,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
             Inventory inventory = event.getInventory();
             byte eventId = tag.getByte(this.CLICK_EVENT_ID);
 
-            buttonClicked(player, inventory,eventId);
+            buttonClicked(player, inventory, eventId);
         }
     }
 
@@ -247,41 +247,36 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
     public void handleInventorySwitching(InventorySequence inventories) {
     }
 
-    private boolean buttonClicked(Player player, Inventory inv, byte id) {
+    private void buttonClicked(Player player, Inventory inv, byte id) {
         if(id < 0) {
-            return false;
+            return;
         }
 
         UUID uuid = player.getUniqueId();
         InventorySequence playerInv = this.getPlayerOwnedInv(uuid);
 
         switch(id) {
-        case 0: // BUILDER_PAGE
+        case 0:
             playerInv.setCurrentInventory(this.builderName);
             break;
 
-        case 1: //BUILDER_PAGE
+        case 1:
             playerInv.setCurrentInventory(this.toolChoiceName);
             break;
         }
 
         player.openInventory(playerInv.getInventory());
         
-        return selectTool(inv, player, id);
+        selectTool(inv, player, id);
     }
 
-    private boolean selectTool(Inventory inventory, Player player, byte id) {
-        // Tool id are from 2..27, in total 27 of them (fills the chest)
+    private void selectTool(Inventory inventory, Player player, byte id) {
         if(id < this.TOOL_ID_MIN || id > this.TOOL_ID_MAX) {
-            return false;
+            return;
         }
         
-        TinkersSpitruct.plugin.getLogger().info("clicked tool: " + id);
         // 2 is the the third slot, left an empty one besides the button
-        // - 2 because tool is starts at 2, but array index starts at 0
-        inventory.setItem(2, this.toolChoiceList[id - 2]);
-
-        return false;
+        inventory.setItem(2, this.toolChoiceList[id - this.TOOL_ID_MIN]);
     }
 
     // ======== Handles end ======== //
