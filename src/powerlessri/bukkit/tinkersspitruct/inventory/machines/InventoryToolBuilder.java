@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,11 +29,16 @@ import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 // Somehow make everything static does not work
 public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
-    public final String IS_TOOL_BUILDER;
-    private final String CLICK_EVENT_ID;
+    public static final String TOOL_BUILDER = "toolBuilder";
+    public static final String PAGE_BUILDER = TOOL_BUILDER + ".builder";
+    public static final String PAGE_TOOL_CHOICE = TOOL_BUILDER + ".toolChoice";
+    
+    public static final String CLICK_EVENT_ID = "toolBuilderClickEvent";
 
-    private final String builderName;
-    private final String toolChoiceName;
+    
+    
+    private final TinkersSpitruct plugin;
+    
     private final byte builderId;
     private final byte toolChoiceId;
 
@@ -72,18 +78,14 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
     private final Map<UUID, InventorySequence> playerMap;
     private final Set<BlockPosition> activePoses;
 
-    public InventoryToolBuilder(String... listAviliableTools) {
+    public InventoryToolBuilder(TinkersSpitruct plugin, String... listAviliableTools) {
         
-        this.IS_TOOL_BUILDER = "isToolBuilder";
-        this.CLICK_EVENT_ID = "toolBuilderClickEvent";
+        this.plugin = plugin;
         
-        this.inventoryTitle = TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.title");
+        this.inventoryTitle = plugin.translate("inventory.toolBuilder.gui.title");
         
         // allocations
         int nextId = 0;
-
-        this.builderName = "toolBuilder.builder";
-        this.toolChoiceName = "toolBuilder.toolChoice";
 
         this.builderId = (byte) nextId++;
         this.toolChoiceId = (byte) nextId++;
@@ -95,7 +97,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         rootTag.set(TinkersSpitruct.PLUGIN_ID, new NBTTagCompound());
 
         NBTTagCompound pluginTag = rootTag.getCompound(TinkersSpitruct.PLUGIN_ID);
-        pluginTag.setBoolean(IS_TOOL_BUILDER, true);
+        pluginTag.setString(ItemTags.OWNER.getKey(), TOOL_BUILDER);
         pluginTag.setBoolean(ItemTags.IS_STACK_IMMOVABLE.getKey(), true);
 
 
@@ -114,10 +116,10 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         ItemMeta metaBuilder = buttonBuilder.getItemMeta();
         ItemMeta metaToolChoice = buttonToolChoice.getItemMeta();
 
-        metaBuilder.setDisplayName( TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.button.builder") );
-        metaToolChoice.setDisplayName( TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.button.toolChoice") );
-        metaBuilder.addEnchant(TinkersSpitruct.plugin.glow, 1, true);
-        metaToolChoice.addEnchant(TinkersSpitruct.plugin.glow, 1, true);
+        metaBuilder.setDisplayName( plugin.translate("inventory.toolBuilder.gui.button.builder") );
+        metaToolChoice.setDisplayName( plugin.translate("inventory.toolBuilder.gui.button.toolChoice") );
+        metaBuilder.addEnchant( plugin.glow, 1, true);
+        metaToolChoice.addEnchant( plugin.glow, 1, true);
 
         buttonBuilder.setItemMeta(metaBuilder);
         buttonToolChoice.setItemMeta(metaToolChoice);
@@ -132,7 +134,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         this.toolBuilder.cd(TinkersSpitruct.PLUGIN_ID);
         
         this.toolBuilder.addDefaultBoolean(ItemTags.IS_STACK_IMMOVABLE.getKey(), true);
-        this.toolBuilder.addDefaultBoolean(this.IS_TOOL_BUILDER, true);
+        this.toolBuilder.addDefaultString(ItemTags.OWNER.getKey(), TOOL_BUILDER);
         this.toolBuilder.addDefaultByte(this.CLICK_EVENT_ID, (byte) -1);
 
 
@@ -160,25 +162,25 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         this.EXCAVATOR = this.setClickId(this.toolBuilder.buildItem(Material.DIAMOND_SPADE), EXCAVATOR_ID);
         this.FISHING_ROD = this.setClickId(this.toolBuilder.buildItem(Material.FISHING_ROD), FISHING_ROD_ID);
 
-        TagHelper.setStackName(this.PICKAXE, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.pickaxe"));
-        TagHelper.setStackName(this.HATCHET, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.hatchet"));
-        TagHelper.setStackName(this.SHOVEL, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.shovel"));
-        TagHelper.setStackName(this.KAMA, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.kama"));
-        TagHelper.setStackName(this.SHEAR, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.shears"));
-        TagHelper.setStackName(this.HAMMER, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.hammer"));
-        TagHelper.setStackName(this.LUMBERAXE, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.lumberAxe"));
-        TagHelper.setStackName(this.EXCAVATOR, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.excavator"));
-        TagHelper.setStackName(this.FISHING_ROD, TinkersSpitruct.plugin.lang.translate("inventory.toolBuilder.gui.toolChoice.fishingRod"));
+        TagHelper.setStackName(this.PICKAXE, plugin.translate("inventory.toolBuilder.gui.toolChoice.pickaxe"));
+        TagHelper.setStackName(this.HATCHET, plugin.translate("inventory.toolBuilder.gui.toolChoice.hatchet"));
+        TagHelper.setStackName(this.SHOVEL, plugin.translate("inventory.toolBuilder.gui.toolChoice.shovel"));
+        TagHelper.setStackName(this.KAMA, plugin.translate("inventory.toolBuilder.gui.toolChoice.kama"));
+        TagHelper.setStackName(this.SHEAR, plugin.translate("inventory.toolBuilder.gui.toolChoice.shears"));
+        TagHelper.setStackName(this.HAMMER, plugin.translate("inventory.toolBuilder.gui.toolChoice.hammer"));
+        TagHelper.setStackName(this.LUMBERAXE, plugin.translate("inventory.toolBuilder.gui.toolChoice.lumberAxe"));
+        TagHelper.setStackName(this.EXCAVATOR, plugin.translate("inventory.toolBuilder.gui.toolChoice.excavator"));
+        TagHelper.setStackName(this.FISHING_ROD, plugin.translate("inventory.toolBuilder.gui.toolChoice.fishingRod"));
         
-        TagHelper.addEnchantment(this.PICKAXE, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.HATCHET, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.SHOVEL, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.KAMA, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.SHEAR, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.HAMMER, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.LUMBERAXE, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.EXCAVATOR, TinkersSpitruct.plugin.glow, 1);
-        TagHelper.addEnchantment(this.FISHING_ROD, TinkersSpitruct.plugin.glow, 1);
+        TagHelper.addEnchantment(this.PICKAXE, plugin.glow, 1);
+        TagHelper.addEnchantment(this.HATCHET, plugin.glow, 1);
+        TagHelper.addEnchantment(this.SHOVEL, plugin.glow, 1);
+        TagHelper.addEnchantment(this.KAMA, plugin.glow, 1);
+        TagHelper.addEnchantment(this.SHEAR, plugin.glow, 1);
+        TagHelper.addEnchantment(this.HAMMER, plugin.glow, 1);
+        TagHelper.addEnchantment(this.LUMBERAXE, plugin.glow, 1);
+        TagHelper.addEnchantment(this.EXCAVATOR, plugin.glow, 1);
+        TagHelper.addEnchantment(this.FISHING_ROD, plugin.glow, 1);
 
         // Amount of slots left in the tool choice page
         this.toolChoiceList = new ItemStack[27];
@@ -197,8 +199,8 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         // ================================ //
         // Inventory builder
 
-        InventoryBuilder builder = new InventoryBuilder(this.builderName, 6, this.inventoryTitle);
-        InventoryBuilder toolChoice = new InventoryBuilder(this.toolChoiceName, 6, this.inventoryTitle);
+        InventoryBuilder builder = new InventoryBuilder(PAGE_BUILDER, 6, this.inventoryTitle);
+        InventoryBuilder toolChoice = new InventoryBuilder(PAGE_TOOL_CHOICE, 6, this.inventoryTitle);
 
         builder.addImmovableSlot(0, buttonToolChoice);
         toolChoice.addImmovableSlot(0, buttonBuilder);
@@ -211,7 +213,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         builder.blockEmptySlots();
         toolChoice.blockEmptySlots();
 
-        this.sequence = new InventorySequenceBuilder("tile.toolBuilder", builder, toolChoice);
+        this.sequence = new InventorySequenceBuilder(TOOL_BUILDER, builder, toolChoice);
 
         // ================================ //
 
@@ -234,20 +236,37 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
     @Override
     public void handleStackClicked(InventoryClickEvent event, ItemStack stack, NBTTagCompound tag) {
-        if(tag != null && tag.getBoolean(IS_TOOL_BUILDER)) {
+        if(tag != null && tag.getString(ItemTags.OWNER.getKey()).equals(TOOL_BUILDER)) {
             Player player = (Player) event.getWhoClicked();
             Inventory inventory = event.getInventory();
             byte eventId = tag.getByte(this.CLICK_EVENT_ID);
 
-            buttonClicked(player, inventory, eventId);
+            attemptToggleInventory(player, inventory, eventId);
+            appemptSelectTool(player, inventory, eventId);
         }
     }
 
     @Override
-    public void handleInventorySwitching(InventorySequence inventories) {
+    public void handleOpenInventory(PlayerInteractEvent event, int x, int y, int z) {
+        if(this.doesPosExists(x, y, z)) {
+            Player player = event.getPlayer();
+            Inventory inventory = this.getPlayerOwnedInv(player.getUniqueId()).getInventory();
+            
+            player.openInventory(inventory);
+        }
+    }
+    
+    @Override
+    public void handleBlockPlacement(PlayerInteractEvent event, int x, int y, int z) {
+        ItemStack hand = event.getPlayer().getInventory().getItemInMainHand();
+        NBTTagCompound tag = PluginTagHelper.getPluginTag(hand);
+        plugin.getLogger().info("place block");
+        if(tag.getString(ItemTags.OWNER.getKey()).equals(TOOL_BUILDER)) {
+            this.activePoses.add(new BlockPosition(x, y, z));
+        }
     }
 
-    private void buttonClicked(Player player, Inventory inv, byte id) {
+    private void attemptToggleInventory(Player player, Inventory inv, byte id) {
         if(id < 0) {
             return;
         }
@@ -257,20 +276,18 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
         switch(id) {
         case 0:
-            playerInv.setCurrentInventory(this.builderName);
+            playerInv.setCurrentInventory(PAGE_BUILDER);
             break;
 
         case 1:
-            playerInv.setCurrentInventory(this.toolChoiceName);
+            playerInv.setCurrentInventory(PAGE_TOOL_CHOICE);
             break;
         }
 
         player.openInventory(playerInv.getInventory());
-        
-        selectTool(inv, player, id);
     }
 
-    private void selectTool(Inventory inventory, Player player, byte id) {
+    private void appemptSelectTool(Player player, Inventory inventory, byte id) {
         if(id < this.TOOL_ID_MIN || id > this.TOOL_ID_MAX) {
             return;
         }
@@ -307,6 +324,8 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
     public boolean doesPosExists(int x, int y, int z) {
         return this.doesPosExists(new BlockPosition(x, y, z));
     }
+    
+    
 
 
 

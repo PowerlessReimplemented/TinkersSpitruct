@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
@@ -14,7 +15,8 @@ import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 public interface IMachineInventoryBuilder {
     
     void handleStackClicked(InventoryClickEvent event, ItemStack stack, NBTTagCompound tag);
-    void handleInventorySwitching(InventorySequence inventories);
+    void handleOpenInventory(PlayerInteractEvent event, int x, int y, int z);
+    void handleBlockPlacement(PlayerInteractEvent event, int x, int y, int z);
     
     InventorySequence makeInventory();
     

@@ -4,7 +4,10 @@ import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 
 public class MainPranker {
     
-    public MainPranker() {
+    private final TinkersSpitruct plugin;
+    
+    public MainPranker(TinkersSpitruct plugin) {
+        this.plugin = plugin;
     }
 
     public void consolePrank(String prank) {
@@ -14,11 +17,12 @@ public class MainPranker {
     
     
     public void doConsolePranks() {
-        this.consolePrank(TinkersSpitruct.plugin.lang.translate("prank.startUp.tic&natura"));
+        this.consolePrank(plugin.translate("prank.startUp.tic&natura"));
+        this.consolePrank(plugin.translate("prank.startUp.silentGems"));
     }
     
     public void haha() {
-        this.consolePrank(TinkersSpitruct.plugin.lang.translate("prank.messages.haha"));
+        this.consolePrank(plugin.translate("prank.messages.haha"));
     }
     
 }

@@ -1,8 +1,5 @@
 package powerlessri.bukkit.tinkersspitruct;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,10 +8,8 @@ import powerlessri.bukkit.tinkersspitruct.commands.CommandBase;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.effects.ItemGlowingEffect;
-import powerlessri.bukkit.tinkersspitruct.events.EventCalls;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryClickHandler;
 import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
-import powerlessri.bukkit.tinkersspitruct.inventory.PositionalInventoryStorage;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
@@ -57,20 +52,20 @@ public class TinkersSpitruct extends JavaPlugin {
         PluginReference.clearPlugins();
         PluginReference.addPlugin(this);
         
-        this.pranker = new MainPranker();
+        this.pranker = new MainPranker(this);
         
-        this.glow = ItemGlowingEffect.registerGlow();
+        this.glow = ItemGlowingEffect.registerGlow(this);
         
         this.reloadLang("en_US");
         
-        registerCommand(new CommandSpitructDebug());
+        registerCommand(new CommandSpitructDebug(this));
         
-        this.clickHandler = new InventoryClickHandler();
-        this.interactionHandler = new WorldInteractionHandler();
+        this.clickHandler = new InventoryClickHandler(this);
+        this.interactionHandler = new WorldInteractionHandler(this);
         registerEvent(this.clickHandler);
         registerEvent(this.interactionHandler);
         
-        this.toolBuilders = new InventoryToolBuilder();
+        this.toolBuilders = new InventoryToolBuilder(this);
         
         
         this.pranker.doConsolePranks();
@@ -102,10 +97,16 @@ public class TinkersSpitruct extends JavaPlugin {
     }
     
     
+    public String translate(String key) {
+        return this.lang.get(key);
+    }
+    
+    public String translate(String key, int index) {
+        return this.lang.listOf(key).get(index);
+    }
+    
     // Test //
     
     public InventorySequence toolBuilder;
-//    public Inventory testInventory;
-//    public Inventory testInventory2;
     
 }

@@ -14,7 +14,7 @@ import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 public class ItemGlowingEffect extends Enchantment {
     
     @Nullable
-    public static ItemGlowingEffect registerGlow() {
+    public static ItemGlowingEffect registerGlow(TinkersSpitruct plugin) {
         ItemGlowingEffect glow = null;
         
         try {
@@ -22,7 +22,7 @@ public class ItemGlowingEffect extends Enchantment {
             field.setAccessible(true);
             field.set(null, true);
         } catch (Exception e) {
-            TinkersSpitruct.plugin.getLogger().log(Level.WARNING, "Error when getting field from Enchentment glass", e);
+            plugin.getLogger().log(Level.WARNING, "Error when getting field from Enchentment glass", e);
         }
         
         try {
@@ -30,7 +30,7 @@ public class ItemGlowingEffect extends Enchantment {
             Enchantment.registerEnchantment(glow);
         } catch (IllegalArgumentException e){
         } catch(Exception e){
-            TinkersSpitruct.plugin.getLogger().log(Level.WARNING, "Error when registering enchantment GlowingEffect", e);
+            plugin.getLogger().log(Level.WARNING, "Error when registering enchantment GlowingEffect", e);
         }
         
         return glow;

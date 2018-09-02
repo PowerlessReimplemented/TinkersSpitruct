@@ -9,16 +9,22 @@ import javax.annotation.Nullable;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
+
 public abstract class CommandBranchedBase extends CommandBase {
     
-    private final String name;
-    private final Map<String, BiConsumer<CommandSender, String[]>> options;
+    protected final TinkersSpitruct plugin;
     
-    public CommandBranchedBase() {
-        this("");
+    protected final String name;
+    protected final Map<String, BiConsumer<CommandSender, String[]>> options;
+    
+    public CommandBranchedBase(TinkersSpitruct plugin) {
+        this(plugin, "");
     }
     
-    public CommandBranchedBase(String name) {
+    public CommandBranchedBase(TinkersSpitruct plugin, String name) {
+        this.plugin = plugin;
+        
         this.name = name;
         this.options = new HashMap<String, BiConsumer<CommandSender, String[]>>();
     }
@@ -39,18 +45,6 @@ public abstract class CommandBranchedBase extends CommandBase {
         if(!this.options.containsKey(label)) {
             this.options.put(label, lambd);
         }
-    }
-    
-    @Nullable
-    protected BiConsumer<CommandSender, String[]> getOptionExcutor(String label) {
-        if(this.hasOptionExcutor(label)) {
-            return this.options.get(label);
-        }
-        return null;
-    }
-    
-    protected boolean hasOptionExcutor(String label) {
-        return this.options.containsKey(label);
     }
 
 }

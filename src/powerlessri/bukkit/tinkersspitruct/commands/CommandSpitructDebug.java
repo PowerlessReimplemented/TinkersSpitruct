@@ -1,5 +1,7 @@
 package powerlessri.bukkit.tinkersspitruct.commands;
 
+import java.util.function.BiConsumer;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,8 +16,8 @@ import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class CommandSpitructDebug extends CommandBranchedBase {
     
-    public CommandSpitructDebug() {
-        super("spitruct");
+    public CommandSpitructDebug(TinkersSpitruct plugin) {
+        super(plugin, "spitruct");
         
         this.addOption("updateHand", (sender, args) -> {
             if(args.length > 0) {
@@ -27,10 +29,9 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                 Player player = (Player) sender;
                 ItemStack hand = player.getInventory().getItemInMainHand();
                 
+                //TODO complete tool system
                 if(PluginTagHelper.hasPluginTag(hand)) {
-//                    NBTTagCompound tag = PluginTagHelper.getPluginTag(hand);
-                    
-//                    ToolDataHandler.updateToolData(tag);
+                    NBTTagCompound tag = PluginTagHelper.getPluginTag(hand);
                 }
             }
         });
@@ -57,7 +58,8 @@ public class CommandSpitructDebug extends CommandBranchedBase {
         if(sender instanceof Player) {
             Player player = (Player) sender;
             player.sendMessage("trying to open inventory...");
-            InventorySequence compound = TinkersSpitruct.plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId());
+            InventorySequence compound = plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId());
+            
             compound.setCurrentInventory(key);
             Inventory inventory = compound.getInventory();
             
@@ -76,8 +78,14 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             return false;
         }
         
-        if(this.hasOptionExcutor(args[0])) {
-            this.getOptionExcutor(args[0]).accept(sender, args);
+        String option = args[0];
+        BiConsumer<CommandSender, String[]> excutor = this.options.get(option);
+        
+        if(excutor == null) {
+            sender.sendMessage(
+                    plugin.translate("command.error.optionDoesNotExist.front") +
+                    option +
+                    plugin.translate("command.error.optionDoesNotExist.back"));
         }
         
         return true;

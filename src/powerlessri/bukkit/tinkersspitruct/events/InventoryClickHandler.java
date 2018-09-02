@@ -12,7 +12,10 @@ import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class InventoryClickHandler implements Listener {
 
-    public InventoryClickHandler() {
+private final TinkersSpitruct plugin;
+    
+    public InventoryClickHandler(TinkersSpitruct plugin) {
+        this.plugin = plugin;
     }
     
     @EventHandler

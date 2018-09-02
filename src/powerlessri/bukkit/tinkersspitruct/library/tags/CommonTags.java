@@ -22,7 +22,9 @@ public class CommonTags {
         IS_STACK_IMMOVABLE("isStackImmovable", CommonTags.IMMOVABLE_STACK_FIXER),
         
         CLICK_EVENT_CATEGORY("clickEventCategory", CommonTags.CLICK_EVENT_BOND_FIXER),
-        CLICK_EVENT_ID("clickEventId", CommonTags.CLICK_EVENT_BOND_FIXER);
+        CLICK_EVENT_ID("clickEventId", CommonTags.CLICK_EVENT_BOND_FIXER),
+        
+        OWNER("", CommonTags.INTERNAL_OWNER_FIXER);
         
         String key;
         TaggedItemChanger fixer;
@@ -93,6 +95,7 @@ public class CommonTags {
     private static String[] rootPath;
     
     private static final TaggedItemChanger ROOT_PLUGIN_TAG_FIXER = TaggedItemChanger.fixerOf(null);
+    private static final TaggedItemChanger INTERNAL_OWNER_FIXER = TaggedItemChanger.fixerOf(null);
     private static final TaggedItemChanger IMMOVABLE_STACK_FIXER = TaggedItemChanger.fixerOf(null);
     private static final TaggedItemChanger CLICK_EVENT_BOND_FIXER = TaggedItemChanger.fixerOf(null);
     
@@ -103,6 +106,11 @@ public class CommonTags {
             Stream.of(rootPath).forEach((key) -> {
                 tag.set(key, new NBTTagCompound());
             });
+        });
+        
+        
+        INTERNAL_OWNER_FIXER.addRule((tag) -> {
+            tag.setString("owner", "");
         });
         
         

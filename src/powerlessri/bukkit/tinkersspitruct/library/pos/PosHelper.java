@@ -1,5 +1,6 @@
 package powerlessri.bukkit.tinkersspitruct.library.pos;
 
+import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
@@ -28,6 +29,10 @@ public class PosHelper {
         
         default: return original;
         }
+    }
+    
+    public static BlockPosition fromLoc(Location loc) {
+        return new BlockPosition(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
     
 }

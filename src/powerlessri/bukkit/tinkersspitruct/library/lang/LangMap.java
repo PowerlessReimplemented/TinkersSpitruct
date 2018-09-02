@@ -19,12 +19,13 @@ import powerlessri.bukkit.tinkersspitruct.library.files.helpers.FilePathHelper;
 
 public class LangMap {
 
+    public static final String ext = "lang";
     public static final Splitter equalSignSpliter = Splitter.on("=").limit(2);
 
     private final String pluginId;
     private final String configPath;
     private final Logger logger;
-    private final Map<String, String> map;
+    private final Map<String, String> lang;
     private final Map<String, ArrayList<String>> mapLists;
     
     public LangMap(Logger logger, String pluginId) {
@@ -35,7 +36,7 @@ public class LangMap {
                 Reference.PLUGIN_CONFIG_FOLDER +
                 FilePathHelper.pathDir(pluginId);
         this.logger = logger;
-        this.map = new HashMap<String, String>();
+        this.lang = new HashMap<String, String>();
         this.mapLists = new HashMap<String, ArrayList<String>>();
     }
     
@@ -43,7 +44,8 @@ public class LangMap {
         FileInputStream langReader;
         
         try {
-            langReader = new FileInputStream(this.configPath + fileName + ".lang");
+            //TODO support place holders
+            langReader = new FileInputStream(this.configPath + fileName + "." + ext);
             
             for(String line : IOUtils.readLines(langReader, StandardCharsets.UTF_8)) {
                 
@@ -57,7 +59,7 @@ public class LangMap {
                     if(!data.hasNext()) continue;
                     String value = data.next();
                     
-                    this.map.put(key, value);
+                    this.lang.put(key, value);
                 }
             }
         } catch(FileNotFoundException e) {
@@ -67,11 +69,11 @@ public class LangMap {
         }
     }
     
-    public String translate(String key) {
-        return this.map.containsKey(key) ? this.map.get(key) : key;
+    public String get(String key) {
+        return this.lang.containsKey(key) ? this.lang.get(key) : key;
     }
     
-    public ArrayList<String> tranlationList(String key) {
+    public ArrayList<String> listOf(String key) {
         if(this.mapLists.containsKey(key)) {
             return this.mapLists.get(key);
         }
@@ -81,11 +83,11 @@ public class LangMap {
         
         while(true) {
             String indexedKey = key + "@" + index;
-            if(!this.map.containsKey(indexedKey)) {
+            if(!this.lang.containsKey(indexedKey)) {
                 break;
             }
             
-            result.add(this.map.get(indexedKey));
+            result.add(this.lang.get(indexedKey));
         }
         
         this.mapLists.put(key, result);
