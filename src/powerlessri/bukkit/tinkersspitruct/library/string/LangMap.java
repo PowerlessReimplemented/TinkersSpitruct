@@ -1,4 +1,4 @@
-package powerlessri.bukkit.tinkersspitruct.library.lang;
+package powerlessri.bukkit.tinkersspitruct.library.string;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,7 +15,8 @@ import org.apache.commons.io.IOUtils;
 import com.google.common.base.Splitter;
 
 import powerlessri.bukkit.tinkersspitruct.library.Reference;
-import powerlessri.bukkit.tinkersspitruct.library.files.helpers.FilePathHelper;
+import powerlessri.bukkit.tinkersspitruct.library.files.PathHelper;
+import powerlessri.bukkit.tinkersspitruct.library.files.FileUtils;
 
 public class LangMap {
 
@@ -30,12 +31,15 @@ public class LangMap {
     
     public LangMap(Logger logger, String pluginId) {
         this.pluginId = pluginId;
-        this.configPath = 
-                Reference.SERVER_FOLDER + 
-                Reference.PLUGIN_FOLDER +
-                Reference.PLUGIN_CONFIG_FOLDER +
-                FilePathHelper.pathDir(pluginId);
+        
+        this.configPath = FileUtils.initalize(
+                Reference.SERVER_FOLDER,
+                Reference.PLUGIN_FOLDER,
+                Reference.PLUGIN_CONFIG_FOLDER,
+                PathHelper.pathDir(pluginId));
+        
         this.logger = logger;
+        
         this.lang = new HashMap<String, String>();
         this.mapLists = new HashMap<String, ArrayList<String>>();
     }
@@ -48,6 +52,8 @@ public class LangMap {
             langReader = new FileInputStream(this.configPath + fileName + "." + ext);
             
             for(String line : IOUtils.readLines(langReader, StandardCharsets.UTF_8)) {
+                
+//                line = line.trim();
                 
                 // Comment start with '#'
                 if (!line.isEmpty() && line.charAt(0) != '#') {
@@ -65,7 +71,7 @@ public class LangMap {
         } catch(FileNotFoundException e) {
             this.logger.log(Level.WARNING, "The specified file path does not exist!", e);
         } catch(Throwable e) {
-            this.logger.log(Level.WARNING, "Unkown error occured during loading .lang file.", e);
+            this.logger.log(Level.WARNING, "Unkown error occured during loading lang.", e);
         }
     }
     
@@ -73,7 +79,7 @@ public class LangMap {
         return this.lang.containsKey(key) ? this.lang.get(key) : key;
     }
     
-    public ArrayList<String> listOf(String key) {
+    public ArrayList<String> getList(String key) {
         if(this.mapLists.containsKey(key)) {
             return this.mapLists.get(key);
         }

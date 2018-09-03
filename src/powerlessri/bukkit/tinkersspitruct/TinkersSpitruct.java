@@ -13,7 +13,7 @@ import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
-import powerlessri.bukkit.tinkersspitruct.library.lang.LangMap;
+import powerlessri.bukkit.tinkersspitruct.library.string.LangMap;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags;
 
 public class TinkersSpitruct extends JavaPlugin { 
@@ -102,7 +102,7 @@ public class TinkersSpitruct extends JavaPlugin {
     }
     
     public String translate(String key, int index) {
-        return this.lang.listOf(key).get(index);
+        return this.lang.getList(key).get(index);
     }
     
     // Test //

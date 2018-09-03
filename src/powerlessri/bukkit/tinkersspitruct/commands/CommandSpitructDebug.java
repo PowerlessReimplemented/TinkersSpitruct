@@ -41,7 +41,10 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                 Player player = (Player) sender;
                 ItemStack hand = player.getInventory().getItemInMainHand();
                 NBTTagCompound tag = TagHelper.getStackTag(hand);
-                player.sendMessage(tag == null ? "[no nbt tag]" : tag.toString());
+                
+                player.sendMessage(
+                        tag == null ? plugin.translate("command.spitruct.handNbt.errorNoTag") :
+                                      tag.toString());
             }
         });
         
@@ -86,6 +89,8 @@ public class CommandSpitructDebug extends CommandBranchedBase {
                     plugin.translate("command.error.optionDoesNotExist.front") +
                     option +
                     plugin.translate("command.error.optionDoesNotExist.back"));
+        } else {
+            excutor.accept(sender, args);
         }
         
         return true;
