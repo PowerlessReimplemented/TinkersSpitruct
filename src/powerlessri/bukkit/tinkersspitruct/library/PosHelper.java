@@ -1,4 +1,4 @@
-package powerlessri.bukkit.tinkersspitruct.library.pos;
+package powerlessri.bukkit.tinkersspitruct.library;
 
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;

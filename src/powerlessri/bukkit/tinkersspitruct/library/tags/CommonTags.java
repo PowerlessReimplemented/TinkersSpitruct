@@ -6,7 +6,6 @@ import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTBase;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 
 public class CommonTags {
     

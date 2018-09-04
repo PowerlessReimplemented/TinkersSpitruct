@@ -12,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
+import powerlessri.bukkit.tinkersspitruct.library.PosHelper;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryHelper;
-import powerlessri.bukkit.tinkersspitruct.library.pos.PosHelper;
 
 public class WorldInteractionHandler implements Listener {
 

@@ -1,6 +1,6 @@
 package powerlessri.bukkit.tinkersspitruct.inventory;
 
-public class PlayerInventoryStorage<T> {
+public class PlayerTiles<T> {
     
     
     

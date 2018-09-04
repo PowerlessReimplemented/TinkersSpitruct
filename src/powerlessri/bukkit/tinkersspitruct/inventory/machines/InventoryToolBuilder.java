@@ -22,8 +22,8 @@ import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequenceBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
+import powerlessri.bukkit.tinkersspitruct.library.tags.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.library.tags.TaggedItemBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.tags.helpers.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 // Somehow make everything static does not work

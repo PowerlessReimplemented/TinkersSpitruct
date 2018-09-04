@@ -7,11 +7,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandBase;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
-import powerlessri.bukkit.tinkersspitruct.effects.ItemGlowingEffect;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryClickHandler;
 import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
+import powerlessri.bukkit.tinkersspitruct.library.effects.ItemGlowingEffect;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 import powerlessri.bukkit.tinkersspitruct.library.string.LangMap;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags;
@@ -54,7 +54,7 @@ public class TinkersSpitruct extends JavaPlugin {
         
         this.pranker = new MainPranker(this);
         
-        this.glow = ItemGlowingEffect.registerGlow(this);
+        this.glow = ItemGlowingEffect.registerGlow(getLogger());
         
         this.reloadLang("en_US");
         

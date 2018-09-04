@@ -1,7 +1,8 @@
-package powerlessri.bukkit.tinkersspitruct.effects;
+package powerlessri.bukkit.tinkersspitruct.library.effects;
 
 import java.lang.reflect.Field;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
@@ -9,12 +10,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.inventory.ItemStack;
 
-import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
-
 public class ItemGlowingEffect extends Enchantment {
     
     @Nullable
-    public static ItemGlowingEffect registerGlow(TinkersSpitruct plugin) {
+    public static ItemGlowingEffect registerGlow(Logger logger) {
         ItemGlowingEffect glow = null;
         
         try {
@@ -22,7 +21,7 @@ public class ItemGlowingEffect extends Enchantment {
             field.setAccessible(true);
             field.set(null, true);
         } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "Error when getting field from Enchentment glass", e);
+            logger.log(Level.WARNING, "Error when getting field from Enchentment glass", e);
         }
         
         try {
@@ -30,7 +29,7 @@ public class ItemGlowingEffect extends Enchantment {
             Enchantment.registerEnchantment(glow);
         } catch (IllegalArgumentException e){
         } catch(Exception e){
-            plugin.getLogger().log(Level.WARNING, "Error when registering enchantment GlowingEffect", e);
+            logger.log(Level.WARNING, "Error when registering enchantment GlowingEffect", e);
         }
         
         return glow;

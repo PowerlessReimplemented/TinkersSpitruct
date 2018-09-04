@@ -7,12 +7,12 @@ import net.minecraft.server.v1_12_R1.BlockPosition;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 
 /** Store inventories by position in the world */
-public class PositionalInventoryStorage {
+public class PositionalTiles {
     
     private final IMachineInventoryBuilder builder;
     private final Map<BlockPosition, InventorySequence> inventories;
     
-    public PositionalInventoryStorage(IMachineInventoryBuilder builder) {
+    public PositionalTiles(IMachineInventoryBuilder builder) {
         this.builder = builder;
         this.inventories = new HashMap<BlockPosition, InventorySequence>();
     }

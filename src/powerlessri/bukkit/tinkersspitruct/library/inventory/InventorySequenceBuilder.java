@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Material;
+
 public class InventorySequenceBuilder {
     
     public final String id;
@@ -28,6 +30,8 @@ public class InventorySequenceBuilder {
     public void addInventory(InventoryBuilder builder) {
         this.builders.add(builder);
     }
+    
+    
     
     public InventorySequence makeInventory() {
         InventorySequence sequence = new InventorySequence();
