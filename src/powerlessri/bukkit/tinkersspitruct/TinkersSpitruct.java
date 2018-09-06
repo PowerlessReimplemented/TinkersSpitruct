@@ -10,9 +10,11 @@ import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryClickHandler;
 import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.annotations.FinalField;
+import powerlessri.bukkit.tinkersspitruct.library.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.effects.ItemGlowingEffect;
 import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
+import powerlessri.bukkit.tinkersspitruct.library.items.ItemBase;
+import powerlessri.bukkit.tinkersspitruct.library.registry.Registry;
 import powerlessri.bukkit.tinkersspitruct.library.string.LangMap;
 import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags;
 
@@ -29,6 +31,8 @@ public class TinkersSpitruct extends JavaPlugin {
     
     @FinalField
     public MainPranker pranker;
+    
+    public Registry<ItemBase> itemRegistry;
     
     public InventoryClickHandler clickHandler;
     public WorldInteractionHandler interactionHandler;
@@ -53,6 +57,8 @@ public class TinkersSpitruct extends JavaPlugin {
         PluginReference.addPlugin(this);
         
         this.pranker = new MainPranker(this);
+        
+        this.itemRegistry = new Registry<>();
         
         this.glow = ItemGlowingEffect.registerGlow(getLogger());
         

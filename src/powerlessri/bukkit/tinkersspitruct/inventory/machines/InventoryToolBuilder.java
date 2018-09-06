@@ -104,8 +104,8 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         NBTTagCompound buttonBuilderTag = (NBTTagCompound) rootTag.clone();
         NBTTagCompound buttonToolChoiceTag = (NBTTagCompound) rootTag.clone();
 
-        buttonBuilderTag.getCompound(TinkersSpitruct.PLUGIN_ID).setByte(this.CLICK_EVENT_ID, this.builderId);
-        buttonToolChoiceTag.getCompound(TinkersSpitruct.PLUGIN_ID).setByte(this.CLICK_EVENT_ID, this.toolChoiceId);
+        buttonBuilderTag.getCompound(TinkersSpitruct.PLUGIN_ID).setByte(CLICK_EVENT_ID, this.builderId);
+        buttonToolChoiceTag.getCompound(TinkersSpitruct.PLUGIN_ID).setByte(CLICK_EVENT_ID, this.toolChoiceId);
 
         ItemStack buttonBuilder = TagHelper.getStackWithTag(new ItemStack(Material.FURNACE), buttonBuilderTag);
         ItemStack buttonToolChoice = TagHelper.getStackWithTag(new ItemStack(Material.DIAMOND_PICKAXE), buttonToolChoiceTag);
@@ -133,9 +133,9 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         this.toolBuilder.addTagCompound(TinkersSpitruct.PLUGIN_ID);
         this.toolBuilder.cd(TinkersSpitruct.PLUGIN_ID);
         
-        this.toolBuilder.addDefaultBoolean(ItemTags.IS_STACK_IMMOVABLE.getKey(), true);
-        this.toolBuilder.addDefaultString(ItemTags.OWNER.getKey(), TOOL_BUILDER);
-        this.toolBuilder.addDefaultByte(this.CLICK_EVENT_ID, (byte) -1);
+        this.toolBuilder.setBoolean(ItemTags.IS_STACK_IMMOVABLE.getKey(), true);
+        this.toolBuilder.setString(ItemTags.OWNER.getKey(), TOOL_BUILDER);
+        this.toolBuilder.setByte(CLICK_EVENT_ID, (byte) -1);
 
 
         this.TOOL_ID_MIN = (byte) nextId;
@@ -223,7 +223,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
     private ItemStack setClickId(ItemStack stack, byte id) {
         NBTTagCompound pluginTag = PluginTagHelper.getPluginTag(stack);
-        pluginTag.setByte(this.CLICK_EVENT_ID, id);
+        pluginTag.setByte(CLICK_EVENT_ID, id);
         return PluginTagHelper.saveToStack(stack, pluginTag);
     }
 
@@ -239,7 +239,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         if(tag != null && tag.getString(ItemTags.OWNER.getKey()).equals(TOOL_BUILDER)) {
             Player player = (Player) event.getWhoClicked();
             Inventory inventory = event.getInventory();
-            byte eventId = tag.getByte(this.CLICK_EVENT_ID);
+            byte eventId = tag.getByte(CLICK_EVENT_ID);
 
             attemptToggleInventory(player, inventory, eventId);
             appemptSelectTool(player, inventory, eventId);
