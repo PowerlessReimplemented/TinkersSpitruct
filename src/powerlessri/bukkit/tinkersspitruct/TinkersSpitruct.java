@@ -4,19 +4,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import powerlessri.bukkit.library.effects.ItemGlowingEffect;
+import powerlessri.bukkit.library.inventory.InventorySequence;
+import powerlessri.bukkit.library.registry.ItemBase;
+import powerlessri.bukkit.library.registry.Registry;
+import powerlessri.bukkit.library.string.LangMap;
+import powerlessri.bukkit.library.tags.CommonTags;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandBase;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryClickHandler;
 import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.FinalField;
-import powerlessri.bukkit.tinkersspitruct.library.effects.ItemGlowingEffect;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
-import powerlessri.bukkit.tinkersspitruct.library.items.ItemBase;
-import powerlessri.bukkit.tinkersspitruct.library.registry.Registry;
-import powerlessri.bukkit.tinkersspitruct.library.string.LangMap;
-import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags;
 
 public class TinkersSpitruct extends JavaPlugin { 
     

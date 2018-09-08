@@ -5,11 +5,13 @@ import javax.annotation.Nullable;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import powerlessri.bukkit.library.tags.TagHelper;
+import powerlessri.bukkit.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
-import powerlessri.bukkit.tinkersspitruct.library.tags.TagHelper;
-import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
 
 public class PluginTagHelper {
+    
+    public static final String REGISTRY_NAME = "registryName";
     
     private PluginTagHelper() {
     }
@@ -68,6 +70,14 @@ public class PluginTagHelper {
         }
         
         return false;
+    }
+    
+    public static String getStackId(ItemStack stack) {
+        return getStackId( getPluginTag(stack) );
+    }
+    
+    public static String getStackId(NBTTagCompound pluginTag) {
+        return pluginTag.getString(REGISTRY_NAME);
     }
     
 }

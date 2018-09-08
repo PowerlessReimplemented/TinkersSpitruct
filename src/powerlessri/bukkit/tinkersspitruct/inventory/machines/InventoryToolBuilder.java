@@ -16,14 +16,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import powerlessri.bukkit.library.inventory.InventoryBuilder;
+import powerlessri.bukkit.library.inventory.InventorySequence;
+import powerlessri.bukkit.library.inventory.InventorySequenceBuilder;
+import powerlessri.bukkit.library.tags.TagHelper;
+import powerlessri.bukkit.library.tags.TaggedItemBuilder;
+import powerlessri.bukkit.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.inventory.IMachineInventoryBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequenceBuilder;
-import powerlessri.bukkit.tinkersspitruct.library.tags.CommonTags.ItemTags;
-import powerlessri.bukkit.tinkersspitruct.library.tags.TagHelper;
-import powerlessri.bukkit.tinkersspitruct.library.tags.TaggedItemBuilder;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 // Somehow make everything static does not work
@@ -73,7 +73,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
 
 
-    private final InventorySequenceBuilder sequence;
+    private final InventorySequenceBuilder sequenceBuilder;
 
     private final Map<UUID, InventorySequence> playerMap;
     private final Set<BlockPosition> activePoses;
@@ -213,7 +213,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         builder.blockEmptySlots();
         toolChoice.blockEmptySlots();
 
-        this.sequence = new InventorySequenceBuilder(TOOL_BUILDER, builder, toolChoice);
+        this.sequenceBuilder = new InventorySequenceBuilder(TOOL_BUILDER, builder, toolChoice);
 
         // ================================ //
 
@@ -229,7 +229,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
     @Override
     public InventorySequence makeInventory() {
-        return sequence.makeInventory();
+        return sequenceBuilder.makeInventory();
     }
 
     // ======== Handles start ======== //

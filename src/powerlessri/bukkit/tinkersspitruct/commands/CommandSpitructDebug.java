@@ -9,9 +9,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import powerlessri.bukkit.library.inventory.InventorySequence;
+import powerlessri.bukkit.library.tags.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
-import powerlessri.bukkit.tinkersspitruct.library.tags.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class CommandSpitructDebug extends CommandBranchedBase {

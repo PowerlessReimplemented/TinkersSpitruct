@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
+import powerlessri.bukkit.library.inventory.InventorySequence;
 
 /** Store inventories by position in the world */
 public class PositionalTiles {

@@ -1,6 +1,5 @@
 package powerlessri.bukkit.tinkersspitruct.events;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -11,9 +10,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
+import powerlessri.bukkit.library.PosHelper;
+import powerlessri.bukkit.library.inventory.InventoryHelper;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
-import powerlessri.bukkit.tinkersspitruct.library.PosHelper;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventoryHelper;
 
 public class WorldInteractionHandler implements Listener {
 

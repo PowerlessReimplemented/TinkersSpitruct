@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
+import powerlessri.bukkit.library.inventory.InventorySequence;
 
 /** Builder for making compound inventories */
 public interface IMachineInventoryBuilder {
