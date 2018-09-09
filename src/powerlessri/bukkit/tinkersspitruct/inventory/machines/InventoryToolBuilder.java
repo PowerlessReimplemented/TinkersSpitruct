@@ -162,25 +162,25 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         this.EXCAVATOR = this.setClickId(this.toolBuilder.buildItem(Material.DIAMOND_SPADE), EXCAVATOR_ID);
         this.FISHING_ROD = this.setClickId(this.toolBuilder.buildItem(Material.FISHING_ROD), FISHING_ROD_ID);
 
-        TagHelper.setStackName(this.PICKAXE, plugin.translate("inventory.toolBuilder.gui.toolChoice.pickaxe"));
-        TagHelper.setStackName(this.HATCHET, plugin.translate("inventory.toolBuilder.gui.toolChoice.hatchet"));
-        TagHelper.setStackName(this.SHOVEL, plugin.translate("inventory.toolBuilder.gui.toolChoice.shovel"));
-        TagHelper.setStackName(this.KAMA, plugin.translate("inventory.toolBuilder.gui.toolChoice.kama"));
-        TagHelper.setStackName(this.SHEAR, plugin.translate("inventory.toolBuilder.gui.toolChoice.shears"));
-        TagHelper.setStackName(this.HAMMER, plugin.translate("inventory.toolBuilder.gui.toolChoice.hammer"));
-        TagHelper.setStackName(this.LUMBERAXE, plugin.translate("inventory.toolBuilder.gui.toolChoice.lumberAxe"));
-        TagHelper.setStackName(this.EXCAVATOR, plugin.translate("inventory.toolBuilder.gui.toolChoice.excavator"));
-        TagHelper.setStackName(this.FISHING_ROD, plugin.translate("inventory.toolBuilder.gui.toolChoice.fishingRod"));
+        PluginTagHelper.setStackName(this.PICKAXE, plugin.translate("inventory.toolBuilder.gui.toolChoice.pickaxe"));
+        PluginTagHelper.setStackName(this.HATCHET, plugin.translate("inventory.toolBuilder.gui.toolChoice.hatchet"));
+        PluginTagHelper.setStackName(this.SHOVEL, plugin.translate("inventory.toolBuilder.gui.toolChoice.shovel"));
+        PluginTagHelper.setStackName(this.KAMA, plugin.translate("inventory.toolBuilder.gui.toolChoice.kama"));
+        PluginTagHelper.setStackName(this.SHEAR, plugin.translate("inventory.toolBuilder.gui.toolChoice.shears"));
+        PluginTagHelper.setStackName(this.HAMMER, plugin.translate("inventory.toolBuilder.gui.toolChoice.hammer"));
+        PluginTagHelper.setStackName(this.LUMBERAXE, plugin.translate("inventory.toolBuilder.gui.toolChoice.lumberAxe"));
+        PluginTagHelper.setStackName(this.EXCAVATOR, plugin.translate("inventory.toolBuilder.gui.toolChoice.excavator"));
+        PluginTagHelper.setStackName(this.FISHING_ROD, plugin.translate("inventory.toolBuilder.gui.toolChoice.fishingRod"));
         
-        TagHelper.addEnchantment(this.PICKAXE, plugin.glow, 1);
-        TagHelper.addEnchantment(this.HATCHET, plugin.glow, 1);
-        TagHelper.addEnchantment(this.SHOVEL, plugin.glow, 1);
-        TagHelper.addEnchantment(this.KAMA, plugin.glow, 1);
-        TagHelper.addEnchantment(this.SHEAR, plugin.glow, 1);
-        TagHelper.addEnchantment(this.HAMMER, plugin.glow, 1);
-        TagHelper.addEnchantment(this.LUMBERAXE, plugin.glow, 1);
-        TagHelper.addEnchantment(this.EXCAVATOR, plugin.glow, 1);
-        TagHelper.addEnchantment(this.FISHING_ROD, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.PICKAXE, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.HATCHET, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.SHOVEL, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.KAMA, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.SHEAR, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.HAMMER, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.LUMBERAXE, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.EXCAVATOR, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.FISHING_ROD, plugin.glow, 1);
 
         // Amount of slots left in the tool choice page
         this.toolChoiceList = new ItemStack[27];
@@ -242,7 +242,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
             byte eventId = tag.getByte(CLICK_EVENT_ID);
 
             attemptToggleInventory(player, inventory, eventId);
-            appemptSelectTool(player, inventory, eventId);
+            attemptSelectTool(player, inventory, eventId);
         }
     }
 
@@ -287,7 +287,7 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         player.openInventory(playerInv.getInventory());
     }
 
-    private void appemptSelectTool(Player player, Inventory inventory, byte id) {
+    private void attemptSelectTool(Player player, Inventory inventory, byte id) {
         if(id < this.TOOL_ID_MIN || id > this.TOOL_ID_MAX) {
             return;
         }

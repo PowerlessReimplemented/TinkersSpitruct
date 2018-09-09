@@ -52,20 +52,4 @@ public class TagHelper {
 
     }
 
-
-
-    // These methods are in TagHelper because they rely on nbt in Vanilla Minecraft
-
-    public static void setStackName(ItemStack stack, String name) {
-        ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(name);
-        stack.setItemMeta(meta);
-    }
-
-    public static void addEnchantment(ItemStack stack, Enchantment enchant, int level) {
-        ItemMeta meta = stack.getItemMeta();
-        meta.addEnchant(enchant, level, true);
-        stack.setItemMeta(meta);
-    }
-
 }

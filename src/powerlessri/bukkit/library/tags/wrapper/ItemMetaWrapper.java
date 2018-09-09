@@ -54,12 +54,20 @@ public class ItemMetaWrapper extends NBTWrapper {
 
 
 
+    public void setTagCompound(String key) {
+        this.setTagCompound(key, new NBTTagCompound());
+    }
+    
     @Override
     public void setTagCompound(String key, NBTTagCompound tag) {
         this.tagChangeCount++;
         super.setTagCompound(key, tag);
     }
 
+    public void setTagList(String key) {
+        this.setTagList(key, new NBTTagList());
+    }
+    
     @Override
     public void setTagList(String key, NBTTagList list) {
         this.tagChangeCount++;
