@@ -1,15 +1,22 @@
 package powerlessri.bukkit.tinkersspitruct;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.library.effects.ItemGlowingEffect;
 import powerlessri.bukkit.library.inventory.InventorySequence;
 import powerlessri.bukkit.library.registry.ItemBase;
 import powerlessri.bukkit.library.registry.Registry;
 import powerlessri.bukkit.library.string.LangMap;
 import powerlessri.bukkit.library.tags.CommonTags;
+import powerlessri.bukkit.library.tags.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandBase;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
@@ -72,6 +79,28 @@ public class TinkersSpitruct extends JavaPlugin {
         
         this.toolBuilders = new InventoryToolBuilder(this);
         
+        // Test //
+        
+        ItemStack metaSource = new ItemStack(Material.STONE);
+        
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setInt("test", 1);
+        tag.setString("owner", "hello");
+        
+        metaSource = TagHelper.getStackWithTag(metaSource, tag);
+        
+        ItemMeta meta = metaSource.getItemMeta();
+        meta.setDisplayName("test - meta source");
+        
+        metaTest1 = new ItemStack(Material.STICK);
+        metaTest1.setItemMeta(meta);
+        
+        meta.setLore(new ArrayList<String>() {{
+            add("1");
+            add("233");
+        }});
+        
+        // Test //
         
         this.pranker.doConsolePranks();
         this.pranker.haha();
@@ -113,5 +142,6 @@ public class TinkersSpitruct extends JavaPlugin {
     // Test //
     
     public InventorySequence toolBuilder;
+    public ItemStack metaTest1;
     
 }

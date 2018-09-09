@@ -30,7 +30,9 @@ public class InventoryClickHandler implements Listener {
         if(event.getSlot() == event.getRawSlot() && tag != null) {
             plugin.toolBuilders.handleStackClicked(event, stack, tag);
 
-            item.onItemClicked(stack, tag, event);
+            if(item != null) {
+                item.onItemClicked(stack, tag, event);
+            }
 
             event.setCancelled(shouldCancelImmovable(tag));
         }

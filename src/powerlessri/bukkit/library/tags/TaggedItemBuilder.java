@@ -32,6 +32,10 @@ public class TaggedItemBuilder extends NBTCompoundWrapper {
     
     public TaggedItemBuilder() {
         super(new NBTTagCompound());
+        
+        this.enchantments = new ArrayList<Enchantment>();
+        this.levels = new ArrayList<Integer>();
+        this.lore = new ArrayList<String>();
     }
     
     
@@ -40,13 +44,6 @@ public class TaggedItemBuilder extends NBTCompoundWrapper {
     
     
     public void addEnchant(Enchantment enchantment, int level) {
-        if(this.enchantments == null) {
-            this.enchantments = new ArrayList<Enchantment>();
-        }
-        if(this.levels == null) {
-            this.levels = new ArrayList<Integer>();
-        }
-        
         this.enchantments.add(enchantment);
         this.levels.add(level);
     }
@@ -56,10 +53,6 @@ public class TaggedItemBuilder extends NBTCompoundWrapper {
     }
     
     public void addLore(String lore) {
-        if(this.lore == null) {
-            this.lore = new ArrayList<String>();
-        }
-        
         this.lore.add(lore);
     }
     

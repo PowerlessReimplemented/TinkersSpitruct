@@ -28,10 +28,10 @@ public class WorldInteractionHandler implements Listener {
 
         switch(action) {
         case LEFT_CLICK_AIR:
-            onPlayerHit(event);
+            onPlayerSwing(event);
             break;
         case LEFT_CLICK_BLOCK:
-            onPlayerInteraction(event);
+            onPlayerHit(event);
             break;
         case RIGHT_CLICK_AIR:
             onPlayerUseItem(event);
