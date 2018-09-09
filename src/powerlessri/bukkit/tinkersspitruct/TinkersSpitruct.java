@@ -12,7 +12,6 @@ import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
 import powerlessri.bukkit.tinkersspitruct.library.FinalField;
 import powerlessri.bukkit.tinkersspitruct.library.effects.ItemGlowingEffect;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 import powerlessri.bukkit.tinkersspitruct.library.items.ItemBase;
 import powerlessri.bukkit.tinkersspitruct.library.registry.Registry;
 import powerlessri.bukkit.tinkersspitruct.library.string.LangMap;
@@ -38,11 +37,6 @@ public class TinkersSpitruct extends JavaPlugin {
     public WorldInteractionHandler interactionHandler;
     
     public InventoryToolBuilder toolBuilders;
-//    public PositionalInventoryStorage partBuilders;
-//    public PositionalInventoryStorage stencilTables;
-//    
-//    public PositionalInventoryStorage partternChests;
-//    public PositionalInventoryStorage partChests;
     
     public ItemGlowingEffect glow;
     
@@ -110,9 +104,5 @@ public class TinkersSpitruct extends JavaPlugin {
     public String translate(String key, int index) {
         return this.lang.getList(key).get(index);
     }
-    
-    // Test //
-    
-    public InventorySequence toolBuilder;
     
 }

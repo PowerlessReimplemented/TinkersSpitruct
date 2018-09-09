@@ -12,30 +12,29 @@ import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
 public class InventoryClickHandler implements Listener {
 
-private final TinkersSpitruct plugin;
-    
+    private final TinkersSpitruct plugin;
+
     public InventoryClickHandler(TinkersSpitruct plugin) {
         this.plugin = plugin;
     }
-    
+
     @EventHandler
     public void onInventoryClicked(InventoryClickEvent event) {
-        TinkersSpitruct plugin = TinkersSpitruct.plugin;
         ItemStack stack = event.getCurrentItem();
-        
+
         NBTTagCompound tag = PluginTagHelper.getPluginTag(stack);
-        
+
         // Start counting slot from top, so the non-player inventory always have the same slot & raw slot
         if(event.getSlot() == event.getRawSlot() && tag != null) {
             plugin.toolBuilders.handleStackClicked(event, stack, tag);;
-            
+
             event.setCancelled(shouldCancelImmovable(tag));
         }
     }
-    
-    
 
-    
+
+
+
     private boolean shouldCancelImmovable(NBTTagCompound tag) {
         if(tag.hasKey(ItemTags.IS_STACK_IMMOVABLE.getKey())) {
             return tag.getBoolean(ItemTags.IS_STACK_IMMOVABLE.getKey());

@@ -1,6 +1,5 @@
 package powerlessri.bukkit.tinkersspitruct.events;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;

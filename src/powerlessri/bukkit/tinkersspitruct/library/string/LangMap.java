@@ -15,8 +15,8 @@ import org.apache.commons.io.IOUtils;
 import com.google.common.base.Splitter;
 
 import powerlessri.bukkit.tinkersspitruct.library.Reference;
-import powerlessri.bukkit.tinkersspitruct.library.files.PathHelper;
 import powerlessri.bukkit.tinkersspitruct.library.files.FileUtils;
+import powerlessri.bukkit.tinkersspitruct.library.files.PathHelper;
 
 public class LangMap {
 

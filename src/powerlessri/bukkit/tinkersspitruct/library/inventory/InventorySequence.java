@@ -3,7 +3,6 @@ package powerlessri.bukkit.tinkersspitruct.library.inventory;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
 /**

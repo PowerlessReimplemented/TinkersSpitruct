@@ -5,12 +5,10 @@ import java.util.function.BiConsumer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
-import powerlessri.bukkit.tinkersspitruct.library.inventory.InventorySequence;
 import powerlessri.bukkit.tinkersspitruct.library.tags.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
 
@@ -48,31 +46,6 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             }
         });
         
-        this.addOption("inventoryTest1", (sender, args) -> {
-            this.inventoryTest(sender, "toolBuilder.builder");
-        });
-        this.addOption("inventoryTest2", (sender, args) -> {
-            this.inventoryTest(sender, "toolBuilder.toolChoice");
-        });
-        
-    }
-    
-    private void inventoryTest(CommandSender sender, String key) {
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-            player.sendMessage("trying to open inventory...");
-            InventorySequence compound = plugin.toolBuilders.getPlayerOwnedInv(player.getUniqueId());
-            
-            compound.setCurrentInventory(key);
-            Inventory inventory = compound.getInventory();
-            
-            if(inventory == null) {
-                player.sendMessage("failed to open inventory");
-                return;
-            }
-            
-            player.openInventory(inventory);
-        }
     }
 
     @Override

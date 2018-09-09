@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 
 public class TaggedItemChanger {
     
