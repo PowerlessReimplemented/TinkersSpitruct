@@ -15,21 +15,16 @@ import net.minecraft.server.v1_12_R1.NBTTagList;
 import powerlessri.bukkit.library.Reference;
 
 /**
- * Advanced nbt wrapper that supports operations like ones {@link ItemMeta} support.
+ * Advanced nbt wrapper that supports operations like ones {@link ItemMeta} support. <br /><br />
+ * 
+ * <b>Deprecated</b><br />
+ *     Reason: The {@link ItemMeta} similar-ed operation does not function 100% accurately, and it's not DRY. <br />
+ *     Use {@link ItemMetaWrapper} instead.
  */
+// Unfortunately needed to repeat the code over at ItemMetaWrapper, it would be too messy
+// to extend from here
+@Deprecated
 public class AdvancedNBTWrapper extends NBTWrapper {
-
-    public static final String TAG_DISPLAY = "display";
-    public static final String TAG_DISPLAY_NAME = "Name";
-    public static final String TAG_DISPLAY_LORE = "Lore";
-    public static final String TAG_DISPLAY_COLOR = "color";
-
-    public static final String TAG_ENCHANTMENTS = "ench";
-    public static final String TAG_ENCHANTMENT_ID = "id";
-    public static final String TAG_ENCHANTMENT_LVL = "lvl";
-    
-    public static final String TAG_UNBREAKABLE = "Unbreakable";
-
 
     public static AdvancedNBTWrapper wrap(ItemStack stack) {
         return new AdvancedNBTWrapper(stack, TagHelper.getStackTag(stack));
@@ -105,7 +100,6 @@ public class AdvancedNBTWrapper extends NBTWrapper {
     }
 
     // Note: call this method also updates the external reference
-    @SuppressWarnings("deprecation")
     public Set<Enchantment> getEnchantments() {
         NBTTagList enchantments = this.rootTag.getList(TAG_ENCHANTMENTS, Reference.TYPE_TAG_COMPOUND);
                 

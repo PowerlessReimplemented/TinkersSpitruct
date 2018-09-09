@@ -6,10 +6,21 @@ import powerlessri.bukkit.library.IWrapper;
 
 public class NBTWrapper implements IWrapper<NBTWrapper, NBTTagCompound> {
     
+    public static final String TAG_DISPLAY = "display";
+    public static final String TAG_DISPLAY_NAME = "Name";
+    public static final String TAG_DISPLAY_LORE = "Lore";
+    public static final String TAG_DISPLAY_COLOR = "color";
+
+    public static final String TAG_ENCHANTMENTS = "ench";
+    public static final String TAG_ENCHANTMENT_ID = "id";
+    public static final String TAG_ENCHANTMENT_LVL = "lvl";
+    
+    public static final String TAG_UNBREAKABLE = "Unbreakable";
+    
     public static final String ROOT_TAG = "#MOVE: root";
     
     /** Root tag for pattern usage */
-    protected final NBTTagCompound rootTag;
+    protected NBTTagCompound rootTag;
     /** Reference to the tag (inside {@code rootTag}) */
     protected NBTTagCompound workingPointer;
     
