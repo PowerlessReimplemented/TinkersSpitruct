@@ -1,8 +1,10 @@
-package powerlessri.bukkit.library.tags;
+package powerlessri.bukkit.library.tags.wrapper;
+
+import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import net.minecraft.server.v1_12_R1.NBTTagList;
-import powerlessri.bukkit.library.IWrapper;
+import powerlessri.bukkit.library.tags.TagHelper;
 
 public class NBTWrapper implements IWrapper<NBTWrapper, NBTTagCompound> {
     
@@ -19,10 +21,15 @@ public class NBTWrapper implements IWrapper<NBTWrapper, NBTTagCompound> {
     
     public static final String ROOT_TAG = "#MOVE: root";
     
+    
+    
     /** Root tag for pattern usage */
     protected NBTTagCompound rootTag;
     /** Reference to the tag (inside {@code rootTag}) */
     protected NBTTagCompound workingPointer;
+    
+    /** Used for {@code applyTraits} method. See the method for detailed explanation. */
+    private ItemStack applicationHandler;
     
     public NBTWrapper(NBTTagCompound tag) {
         this.rootTag = tag;
@@ -130,6 +137,13 @@ public class NBTWrapper implements IWrapper<NBTWrapper, NBTTagCompound> {
     @Override
     public NBTTagCompound unwrap() {
         return this.rootTag;
+    }
+    
+    /** Override the nbt data with data stored in this NBTWrapper. */
+    public void applyTraits(ItemStack applicator) {
+        // Turn rootTag into an ItemMeta, which has all the nbt data too
+        this.applicationHandler = TagHelper.getStackWithTag(this.applicationHandler, this.rootTag);
+        applicator.setItemMeta(this.applicationHandler.getItemMeta());
     }
     
 }

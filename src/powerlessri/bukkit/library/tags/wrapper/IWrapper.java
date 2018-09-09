@@ -1,4 +1,4 @@
-package powerlessri.bukkit.library;
+package powerlessri.bukkit.library.tags.wrapper;
 
 
 // W stands for Wrapper, O stands for Original

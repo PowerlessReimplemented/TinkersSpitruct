@@ -1,4 +1,4 @@
-package powerlessri.bukkit.library.tags;
+package powerlessri.bukkit.library.tags.wrapper;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,6 +13,7 @@ import net.minecraft.server.v1_12_R1.NBTBase;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import net.minecraft.server.v1_12_R1.NBTTagList;
 import powerlessri.bukkit.library.Reference;
+import powerlessri.bukkit.library.tags.TagHelper;
 
 /**
  * Advanced nbt wrapper that supports operations like ones {@link ItemMeta} support. <br /><br />
@@ -165,51 +166,61 @@ public class AdvancedNBTWrapper extends NBTWrapper {
 
 
 
+    @Override
     public void setTagCompound(String key, NBTTagCompound tag) {
         this.tagChangeCount++;
         super.setTagCompound(key, tag);
     }
 
+    @Override
     public void setTagList(String key, NBTTagList list) {
         this.tagChangeCount++;
         super.setTagList(key, list);
     }
 
+    @Override
     public void setByte(String key, byte val) {
         this.tagChangeCount++;
         super.setByte(key, val);
     }
 
+    @Override
     public void setInt(String key, int val) {
         this.tagChangeCount++;
         super.setInt(key, val);
     }
 
+    @Override
     public void setShort(String key, short val) {
         this.tagChangeCount++;
         super.setShort(key, val);
     }
 
+    @Override
     public void setLong(String key, long val) {
         this.tagChangeCount++;
         super.setLong(key, val);
     }
 
+    @Override
     public void setFloat(String key, float val) {
         this.tagChangeCount++;
         super.setFloat(key, val);
     }
 
+    @Override
     public void setDouble(String key, double val) {
         this.tagChangeCount++;
         super.setDouble(key, val);
     }
-
+    
+    @Override
     public void setBoolean(String key, boolean val) {
         this.tagChangeCount++;
         super.setBoolean(key, val);
     }
 
+    @Override
     public void setString(String key, String val) {
         this.tagChangeCount++;
         super.setString(key, val);
@@ -224,6 +235,7 @@ public class AdvancedNBTWrapper extends NBTWrapper {
         }
     }
 
+    @Override
     public void applyTraits(ItemStack applicator) {
         this.updateInternalStack();
 

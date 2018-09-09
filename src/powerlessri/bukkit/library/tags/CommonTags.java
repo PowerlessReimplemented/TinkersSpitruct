@@ -25,10 +25,12 @@ public class CommonTags {
         
         OWNER("", CommonTags.INTERNAL_OWNER_FIXER);
         
-        String key;
-        TaggedItemChanger fixer;
         
-        private ItemTags(String key, TaggedItemChanger fixer) {
+        
+        String key;
+        TaggedItemFixer fixer;
+        
+        private ItemTags(String key, TaggedItemFixer fixer) {
             this.key = key;
             this.fixer = fixer;
         }
@@ -37,19 +39,19 @@ public class CommonTags {
             NBTTagCompound tag = TagHelper.getStackTag(stack);
             
             if(tag != null) {
-                NBTTagCompound working = tag;
+                NBTTagCompound current = tag;
                 
                 // Follow the path to the actual workspace tag
                 for(int i = 0; i < rootPath.length; i++) {
                     // We don't want mess around with a wrong path
-                    if(working == null) {
+                    if(current == null) {
                         return false;
                     }
                     
-                    working = working.getCompound(rootPath[i]);
+                    current = current.getCompound(rootPath[i]);
                 }
                 
-                NBTBase result = working.get(this.key);
+                NBTBase result = current.get(this.key);
                 
                 if(result == null) {
                     return false;
@@ -93,10 +95,10 @@ public class CommonTags {
     
     private static String[] rootPath;
     
-    private static final TaggedItemChanger ROOT_PLUGIN_TAG_FIXER = TaggedItemChanger.fixerOf(null);
-    private static final TaggedItemChanger INTERNAL_OWNER_FIXER = TaggedItemChanger.fixerOf(null);
-    private static final TaggedItemChanger IMMOVABLE_STACK_FIXER = TaggedItemChanger.fixerOf(null);
-    private static final TaggedItemChanger CLICK_EVENT_BOND_FIXER = TaggedItemChanger.fixerOf(null);
+    private static final TaggedItemFixer ROOT_PLUGIN_TAG_FIXER = TaggedItemFixer.fixerOf(null);
+    private static final TaggedItemFixer INTERNAL_OWNER_FIXER = TaggedItemFixer.fixerOf(null);
+    private static final TaggedItemFixer IMMOVABLE_STACK_FIXER = TaggedItemFixer.fixerOf(null);
+    private static final TaggedItemFixer CLICK_EVENT_BOND_FIXER = TaggedItemFixer.fixerOf(null);
     
     public static void resetItemTagFixers(String... rootPath) {
         CommonTags.rootPath = rootPath;

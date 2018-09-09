@@ -7,9 +7,8 @@ import java.util.function.Consumer;
 import org.bukkit.inventory.ItemStack;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 
-public class TaggedItemChanger {
+public class TaggedItemFixer {
     
     public static class TagChangingRule {
         
@@ -33,14 +32,14 @@ public class TaggedItemChanger {
         
     }
     
-    public static TaggedItemChanger fixerOf(ItemStack parentStack) {
-        return new TaggedItemChanger();
+    public static TaggedItemFixer fixerOf(ItemStack parentStack) {
+        return new TaggedItemFixer();
     }
     
     
     private final List<TagChangingRule> rules;
     
-    public TaggedItemChanger() {
+    public TaggedItemFixer() {
         this.rules = new ArrayList<TagChangingRule>();
     }
     
@@ -60,9 +59,9 @@ public class TaggedItemChanger {
             return stack;
         }
         
-        this.rules.forEach((rule) -> {
+        for(TagChangingRule rule : this.rules) {
             rule.modifyTag(tag);
-        });
+        }
         
         return TagHelper.getStackWithTag(stack, tag);
     }
