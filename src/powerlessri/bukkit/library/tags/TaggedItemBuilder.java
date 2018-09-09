@@ -10,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
 
-public class TaggedItemBuilder extends NBTCompoundWrapper {
+public class TaggedItemBuilder extends NBTWrapper {
     
     
     

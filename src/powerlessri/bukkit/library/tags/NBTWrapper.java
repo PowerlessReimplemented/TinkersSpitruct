@@ -4,7 +4,7 @@ import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import net.minecraft.server.v1_12_R1.NBTTagList;
 import powerlessri.bukkit.library.IWrapper;
 
-public class NBTCompoundWrapper implements IWrapper<NBTCompoundWrapper, NBTTagCompound> {
+public class NBTWrapper implements IWrapper<NBTWrapper, NBTTagCompound> {
     
     public static final String ROOT_TAG = "#MOVE: root";
     
@@ -13,7 +13,7 @@ public class NBTCompoundWrapper implements IWrapper<NBTCompoundWrapper, NBTTagCo
     /** Reference to the tag (inside {@code rootTag}) */
     protected NBTTagCompound workingPointer;
     
-    public NBTCompoundWrapper(NBTTagCompound tag) {
+    public NBTWrapper(NBTTagCompound tag) {
         this.rootTag = tag;
         this.workingPointer = tag;
     }
@@ -34,8 +34,8 @@ public class NBTCompoundWrapper implements IWrapper<NBTCompoundWrapper, NBTTagCo
         this.setTagCompound(key, new NBTTagCompound());
     }
     
-    public void setTagCompound(String key, NBTTagCompound base) {
-        this.workingPointer.set(key, base);
+    public void setTagCompound(String key, NBTTagCompound tag) {
+        this.workingPointer.set(key, tag);
     }
     
     public void addTagList(String key) {

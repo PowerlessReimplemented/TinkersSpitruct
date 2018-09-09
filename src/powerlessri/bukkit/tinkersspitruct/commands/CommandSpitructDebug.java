@@ -52,7 +52,7 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             this.inventoryTest(sender, "toolBuilder.builder");
         });
         
-        this.addOption("meta1", (sender, args) -> {
+        this.addOption("meta", (sender, args) -> {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 

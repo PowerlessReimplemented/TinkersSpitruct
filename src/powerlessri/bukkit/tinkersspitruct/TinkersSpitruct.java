@@ -83,13 +83,15 @@ public class TinkersSpitruct extends JavaPlugin {
         
         ItemStack metaSource = new ItemStack(Material.STONE);
         
+        ItemMeta meta = metaSource.getItemMeta();
+        
         NBTTagCompound tag = new NBTTagCompound();
         tag.setInt("test", 1);
         tag.setString("owner", "hello");
         
         metaSource = TagHelper.getStackWithTag(metaSource, tag);
         
-        ItemMeta meta = metaSource.getItemMeta();
+        
         meta.setDisplayName("test - meta source");
         
         metaTest1 = new ItemStack(Material.STICK);
