@@ -53,7 +53,7 @@ public class LangMap {
             
             for(String line : IOUtils.readLines(langReader, StandardCharsets.UTF_8)) {
                 
-//                line = line.trim();
+                line = line.trim();
                 
                 // Comment start with '#'
                 if (!line.isEmpty() && line.charAt(0) != '#') {
@@ -75,14 +75,21 @@ public class LangMap {
         }
     }
     
+    
+    
     public String get(String key) {
         return this.lang.containsKey(key) ? this.lang.get(key) : key;
+    }
+    
+    public String get(String key, int index) {
+        return this.getList(key).get(index);
     }
     
     public ArrayList<String> getList(String key) {
         if(this.mapLists.containsKey(key)) {
             return this.mapLists.get(key);
         }
+        
         
         int index = 1;
         ArrayList<String> result = new ArrayList<String>();
@@ -96,7 +103,11 @@ public class LangMap {
             result.add(this.lang.get(indexedKey));
         }
         
-        this.mapLists.put(key, result);
+        
+        if(!result.isEmpty()) {
+            this.mapLists.put(key, result);
+        }
+        
         return result;
     }
     

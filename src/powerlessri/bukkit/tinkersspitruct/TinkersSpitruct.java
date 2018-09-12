@@ -1,28 +1,22 @@
 package powerlessri.bukkit.tinkersspitruct;
 
-import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
-import powerlessri.bukkit.library.effects.ItemGlowingEffect;
-import powerlessri.bukkit.library.inventory.InventorySequence;
 import powerlessri.bukkit.library.registry.ItemBase;
 import powerlessri.bukkit.library.registry.Registry;
+import powerlessri.bukkit.library.registry.TileBase;
 import powerlessri.bukkit.library.string.LangMap;
 import powerlessri.bukkit.library.tags.CommonTags;
-import powerlessri.bukkit.library.tags.TagHelper;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandBase;
 import powerlessri.bukkit.tinkersspitruct.commands.CommandSpitructDebug;
 import powerlessri.bukkit.tinkersspitruct.eastereggs.MainPranker;
 import powerlessri.bukkit.tinkersspitruct.events.InventoryClickHandler;
 import powerlessri.bukkit.tinkersspitruct.events.WorldInteractionHandler;
 import powerlessri.bukkit.tinkersspitruct.inventory.machines.InventoryToolBuilder;
+import powerlessri.bukkit.tinkersspitruct.items.ItemInventoryButton;
 
 public class TinkersSpitruct extends JavaPlugin { 
     
@@ -35,10 +29,10 @@ public class TinkersSpitruct extends JavaPlugin {
     public static final String PLUGIN_NAME = "Tinker's Spitruct";
     
     
-    @FinalField
     public MainPranker pranker;
     
     public Registry<ItemBase> itemRegistry;
+    public Registry<TileBase> tileRegistry;
     
     public InventoryClickHandler clickHandler;
     public WorldInteractionHandler interactionHandler;
@@ -49,8 +43,6 @@ public class TinkersSpitruct extends JavaPlugin {
 //    
 //    public PositionalInventoryStorage partternChests;
 //    public PositionalInventoryStorage partChests;
-    
-    public ItemGlowingEffect glow;
     
     public LangMap lang;
     
@@ -65,8 +57,7 @@ public class TinkersSpitruct extends JavaPlugin {
         this.pranker = new MainPranker(this);
         
         this.itemRegistry = new Registry<>();
-        
-        this.glow = ItemGlowingEffect.registerGlow(getLogger());
+        this.tileRegistry = new Registry<>();
         
         this.reloadLang("en_US");
         
@@ -81,26 +72,8 @@ public class TinkersSpitruct extends JavaPlugin {
         
         // Test //
         
-        ItemStack metaSource = new ItemStack(Material.STONE);
-        
-        ItemMeta meta = metaSource.getItemMeta();
-        
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setInt("test", 1);
-        tag.setString("owner", "hello");
-        
-        metaSource = TagHelper.getStackWithTag(metaSource, tag);
-        
-        
-        meta.setDisplayName("test - meta source");
-        
-        metaTest1 = new ItemStack(Material.STICK);
-        metaTest1.setItemMeta(meta);
-        
-        meta.setLore(new ArrayList<String>() {{
-            add("1");
-            add("233");
-        }});
+        itemRegistry.registerItem(new ItemInventoryButton(
+                this, "test", Material.STICK, (event) -> {}, true));
         
         // Test //
         
@@ -140,10 +113,5 @@ public class TinkersSpitruct extends JavaPlugin {
     public String translate(String key, int index) {
         return this.lang.getList(key).get(index);
     }
-    
-    // Test //
-    
-    public InventorySequence toolBuilder;
-    public ItemStack metaTest1;
     
 }

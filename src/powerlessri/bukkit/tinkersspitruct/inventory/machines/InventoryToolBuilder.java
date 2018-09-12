@@ -16,12 +16,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import net.minecraft.server.v1_12_R1.BlockPosition;
 import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import powerlessri.bukkit.library.effects.Effects;
 import powerlessri.bukkit.library.inventory.InventoryBuilder;
 import powerlessri.bukkit.library.inventory.InventorySequence;
 import powerlessri.bukkit.library.inventory.InventorySequenceBuilder;
+import powerlessri.bukkit.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.library.tags.TagHelper;
 import powerlessri.bukkit.library.tags.TaggedItemBuilder;
-import powerlessri.bukkit.library.tags.CommonTags.ItemTags;
 import powerlessri.bukkit.tinkersspitruct.TinkersSpitruct;
 import powerlessri.bukkit.tinkersspitruct.inventory.IMachineInventoryBuilder;
 import powerlessri.bukkit.tinkersspitruct.tags.PluginTagHelper;
@@ -118,8 +119,8 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
 
         metaBuilder.setDisplayName( plugin.translate("inventory.toolBuilder.gui.button.builder") );
         metaToolChoice.setDisplayName( plugin.translate("inventory.toolBuilder.gui.button.toolChoice") );
-        metaBuilder.addEnchant( plugin.glow, 1, true);
-        metaToolChoice.addEnchant( plugin.glow, 1, true);
+        metaBuilder.addEnchant( Effects.GLOW, 1, true);
+        metaToolChoice.addEnchant( Effects.GLOW, 1, true);
 
         buttonBuilder.setItemMeta(metaBuilder);
         buttonToolChoice.setItemMeta(metaToolChoice);
@@ -172,15 +173,15 @@ public class InventoryToolBuilder implements IMachineInventoryBuilder {
         PluginTagHelper.setStackName(this.EXCAVATOR, plugin.translate("inventory.toolBuilder.gui.toolChoice.excavator"));
         PluginTagHelper.setStackName(this.FISHING_ROD, plugin.translate("inventory.toolBuilder.gui.toolChoice.fishingRod"));
         
-        PluginTagHelper.addEnchantment(this.PICKAXE, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.HATCHET, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.SHOVEL, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.KAMA, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.SHEAR, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.HAMMER, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.LUMBERAXE, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.EXCAVATOR, plugin.glow, 1);
-        PluginTagHelper.addEnchantment(this.FISHING_ROD, plugin.glow, 1);
+        PluginTagHelper.addEnchantment(this.PICKAXE, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.HATCHET, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.SHOVEL, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.KAMA, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.SHEAR, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.HAMMER, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.LUMBERAXE, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.EXCAVATOR, Effects.GLOW, 1);
+        PluginTagHelper.addEnchantment(this.FISHING_ROD, Effects.GLOW, 1);
 
         // Amount of slots left in the tool choice page
         this.toolChoiceList = new ItemStack[27];

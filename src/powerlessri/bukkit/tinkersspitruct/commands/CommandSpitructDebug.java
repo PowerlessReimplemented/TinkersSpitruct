@@ -48,15 +48,17 @@ public class CommandSpitructDebug extends CommandBranchedBase {
             }
         });
         
+        // Test //
+        
         this.addOption("inventoryTest1", (sender, args) -> {
             this.inventoryTest(sender, "toolBuilder.builder");
         });
         
-        this.addOption("meta", (sender, args) -> {
+        this.addOption("reg", (sender, args) -> {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
                 
-                player.getInventory().addItem(plugin.metaTest1);
+                player.getInventory().addItem(plugin.itemRegistry.getRegistryItem("item.inventoryButton.test").createItemStack());
             }
         });
         

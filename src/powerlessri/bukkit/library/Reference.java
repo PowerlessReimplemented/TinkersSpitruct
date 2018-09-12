@@ -28,5 +28,19 @@ public class Reference {
     public static final int TYPE_TAG_STRNG = 8;
     public static final int TYPE_TAG_LIST = 9;
     public static final int TYPE_TAG_COMPOUND = 10; 
+    
+    
+    public static final String CATEGORY_ITEM = "item";
+    public static final String CATEGORY_BLOCK = "block";
+    public static final String CATEGORY_INVENTORY = "inventory";
+    public static final String CATEGORY_COMMAND = "command";
+    public static final String CATEGORY_USER_MANUAL = "tutorial";
+    
+    /** Display name. Limited to {@code CATEGORY_ITEM}, {@code CATEGORY_BLOCK}. */
+    public static final String ATTRIBUTE_NAME = "name";
+    /** Equivalent to {@code ATTRIBTUE_NAME} for items and blocks. Limited to {@code CATEGORY_INVENTORY}. */
+    public static final String ATTRIBUTE_TITLE = "title";
+    /** Lore/Usage. For all categories except {@code USER_MANUAL}. */
+    public static final String ATTRIBUTE_DESCRIPTION = "name";
 
 }
